@@ -1,128 +1,475 @@
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E‑Commerce · Under Construction</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <title>Coming Soon | Website Under Construction</title>
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      background: #0b0e14;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      color: #fff;
+    }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* main card – bada, premium feel */
+    .construction-card {
+      max-width: 1100px;
+      width: 100%;
+      background: linear-gradient(145deg, #141a24, #1a212e);
+      border-radius: 4rem 2rem 4rem 2rem;
+      padding: 3.5rem 3rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 215, 0, 0.08);
+      backdrop-filter: blur(2px);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-        body {
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
+    /* subtle animated glow */
+    .construction-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -30%;
+      width: 160%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.03), transparent 70%);
+      animation: driftGlow 18s infinite alternate ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .container {
-            max-width: 650px;
-            width: 100%;
-        }
+    @keyframes driftGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(8%, 6%) scale(1.2); }
+    }
 
-        .icon {
-            font-size: 70px;
-            margin-bottom: 20px;
-        }
+    /* content layer */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
 
-        h1 {
-            font-size: clamp(38px, 8vw, 70px);
-            color: #d4af37;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
+    /* ===== BIG animated header ===== */
+    .hero-title {
+      font-size: clamp(3.8rem, 14vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.25rem 0.75rem;
+    }
 
-        h2 {
-            font-size: clamp(22px, 5vw, 32px);
-            margin-bottom: 20px;
-        }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmerGold 4s ease-in-out infinite alternate;
+      display: inline-block;
+      padding-right: 0.1em;
+    }
 
-        p {
-            color: #cccccc;
-            font-size: 17px;
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
+    @keyframes shimmerGold {
+      0% { background-position: 0% 30%; }
+      100% { background-position: 100% 70%; }
+    }
 
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 5px solid #444;
-            border-top: 5px solid #d4af37;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 30px;
-        }
+    .hero-title .icon-big {
+      font-size: 0.8em;
+      color: #fbbf24;
+      animation: rotateGear 10s linear infinite;
+      display: inline-block;
+      margin-left: 0.15em;
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 13px 28px;
-            border: 1px solid #d4af37;
-            color: #d4af37;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+    @keyframes rotateGear {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
 
-        .btn:hover {
-            background: #d4af37;
-            color: #111111;
-        }
+    /* subtitle */
+    .sub-headline {
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 400;
+      color: #cbd5e1;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.02em;
+      border-left: 5px solid #fbbf24;
+      padding-left: 1.5rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
 
-        .footer {
-            margin-top: 45px;
-            font-size: 13px;
-            color: #777777;
-        }
+    .sub-headline i {
+      color: #fbbf24;
+      font-size: 0.9em;
+      animation: pulseIcon 1.8s ease-in-out infinite;
+    }
 
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    @keyframes pulseIcon {
+      0% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    /* animated progress / loader */
+    .loader-area {
+      background: #1f2937;
+      border-radius: 100px;
+      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+      margin: 2.8rem 0 2.8rem 0;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 6px 12px rgba(0,0,0,0.3);
+      border: 1px solid #374151;
+    }
+
+    .progress-track {
+      flex: 2;
+      min-width: 200px;
+      height: 18px;
+      background: #2d3748;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+      background-size: 200% 100%;
+      border-radius: 40px;
+      animation: fillProgress 2.8s ease-in-out infinite alternate, shimmerBar 3s linear infinite;
+      box-shadow: 0 0 15px #fbbf24aa;
+    }
+
+    @keyframes fillProgress {
+      0% { width: 12%; }
+      100% { width: 92%; }
+    }
+
+    @keyframes shimmerBar {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    .loader-label {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 600;
+      color: #e5e7eb;
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .loader-label i {
+      color: #fbbf24;
+      animation: spin 2s linear infinite;
+      font-size: 1.5rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* feature grid – bada & animated */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1.8rem;
+      margin: 2.8rem 0 2.5rem 0;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(4px);
+      padding: 1.6rem 0.8rem;
+      border-radius: 40px 12px 40px 12px;
+      text-align: center;
+      border: 1px solid #334155;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s ease;
+      animation: floatItem 5s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    .feature-item:nth-child(2) { animation-delay: 0.3s; }
+    .feature-item:nth-child(3) { animation-delay: 0.7s; }
+    .feature-item:nth-child(4) { animation-delay: 1.1s; }
+
+    @keyframes floatItem {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-10px) scale(1.02); }
+    }
+
+    .feature-item i {
+      font-size: 2.8rem;
+      color: #fbbf24;
+      margin-bottom: 0.6rem;
+      display: block;
+      filter: drop-shadow(0 0 6px #fbbf2466);
+      animation: iconPulse 2.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes iconPulse {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .feature-item span {
+      display: block;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #f1f5f9;
+      letter-spacing: 0.3px;
+    }
+
+    .feature-item small {
+      display: block;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+    }
+
+    /* notify / CTA – bada */
+    .action-area {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.8rem;
+      margin-top: 2rem;
+      padding-top: 1.8rem;
+      border-top: 2px dashed #334155;
+    }
+
+    .action-area .cta-text {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .action-area .cta-text i {
+      color: #fbbf24;
+      animation: ringBell 2.5s ease-in-out infinite;
+    }
+
+    @keyframes ringBell {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(20deg); }
+      20% { transform: rotate(-15deg); }
+      30% { transform: rotate(10deg); }
+      40% { transform: rotate(-5deg); }
+      50% { transform: rotate(4deg); }
+      60%, 100% { transform: rotate(0deg); }
+    }
+
+    .notify-btn {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      border: none;
+      padding: 1rem 2.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #0b0e14;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+      transition: all 0.2s ease;
+      border: 1px solid #fcd34d;
+      letter-spacing: 0.3px;
+    }
+
+    .notify-btn i {
+      font-size: 1.6rem;
+      transition: transform 0.25s;
+    }
+
+    .notify-btn:hover {
+      transform: scale(1.04) translateY(-4px);
+      box-shadow: 0 14px 30px #fbbf24aa;
+      background: linear-gradient(135deg, #fcd34d, #f59e0b);
+    }
+
+    .notify-btn:active {
+      transform: scale(0.96);
+    }
+
+    .notify-btn:hover i {
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    /* footer */
+    .footer-note {
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: #64748b;
+      text-align: center;
+      letter-spacing: 0.5px;
+      border-top: 1px solid #1e293b;
+      padding-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-note i {
+      margin: 0 0.3rem;
+      color: #fbbf24;
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      .construction-card {
+        padding: 2rem 1.5rem;
+        border-radius: 2.5rem 1.2rem 2.5rem 1.2rem;
+      }
+      .hero-title {
+        font-size: clamp(2.8rem, 16vw, 4.5rem);
+      }
+      .sub-headline {
+        font-size: 1.2rem;
+        padding-left: 1rem;
+      }
+      .loader-area {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 1rem;
+      }
+      .loader-label {
+        justify-content: center;
+      }
+      .action-area {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .notify-btn {
+        justify-content: center;
+        padding: 0.9rem 1.8rem;
+        font-size: 1.2rem;
+      }
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-title .icon-big {
+        font-size: 0.6em;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="construction-card">
+    <div class="content">
+      
+      <!-- BIG animated heading -->
+      <h1 class="hero-title">
+        <span class="highlight">Under</span>
+        <span class="highlight" style="animation-delay: 0.5s;">Construction</span>
+        <i class="fas fa-cog icon-big"></i>
+      </h1>
+      
+      <!-- Sub-headline with animated icon -->
+      <div class="sub-headline">
+        <i class="fas fa-store-alt"></i> 
+        <span>E‑commerce reimagined · <strong style="color:#fbbf24;">coming soon</strong></span>
+        <i class="fas fa-arrow-right" style="margin-left: 0.3rem;"></i>
+      </div>
 
-    <div class="container">
-
-        <div class="icon">🚧</div>
-
-        <h1>Coming Soon</h1>
-
-        <h2>Website Under Construction</h2>
-
-        <p>
-            We are working hard to bring you something amazing.
-            Our new website is currently under construction.
-            Please visit us again soon!
-        </p>
-
-        <div class="loader"></div>
-
-        <a href="mailto:your@email.com" class="btn">
-            Contact Us
-        </a>
-
-        <div class="footer">
-            © 2026 Your Website. All Rights Reserved.
+      <!-- animated progress loader – bada -->
+      <div class="loader-area">
+        <div class="progress-track">
+          <div class="progress-fill"></div>
         </div>
+        <div class="loader-label">
+          <i class="fas fa-sync-alt"></i> 
+          <span>building experience</span>
+        </div>
+      </div>
 
-    </div>
+      <!-- feature grid – animated floating items -->
+      <div class="feature-grid">
+        <div class="feature-item">
+          <i class="fas fa-rocket"></i>
+          <span>Blazing fast</span>
+          <small>edge‑ready</small>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-palette"></i>
+          <span>Fresh UI</span>
+          <small>3D & glassmorphism</small>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-cart-plus"></i>
+          <span>Smart cart</span>
+          <small>AI‑assisted</small>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-shield-alt"></i>
+          <span>Secure</span>
+          <small>privacy first</small>
+        </div>
+      </div>
 
+      <!-- CTA + notify – bada animated -->
+      <div class="action-area">
+        <div class="cta-text">
+          <i class="fas fa-bell"></i> 
+          <span>Get notified when we launch</span>
+        </div>
+        <button class="notify-btn" onclick="alert('🚀 We’ll ping you! (demo)')">
+          <i class="fas fa-envelope"></i> Notify me
+        </button>
+      </div>
+
+      <!-- footer / social vibe -->
+      <div class="footer-note">
+        <span><i class="fas fa-code"></i> built with <i class="fas fa-heart" style="color:#f43f5e;"></i> for the future</span>
+        <span><i class="fas fa-calendar-alt"></i> launch: 2026</span>
+        <span><i class="fas fa-globe"></i> .shop</span>
+      </div>
+
+    </div> <!-- /content -->
+  </div> <!-- /construction-card -->
 </body>
 </html>
-```
