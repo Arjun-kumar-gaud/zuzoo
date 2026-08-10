@@ -3,473 +3,432 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E‑Commerce · Under Construction</title>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>ShopVerse · E‑commerce</title>
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- custom tweaks -->
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body {
+      background: #f8f9fa;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     }
 
-    body {
-      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-      background: #0b0e14;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
+    /* navbar brand */
+    .navbar-brand i {
+      color: #ff6b35;
+      font-size: 1.8rem;
+    }
+    .navbar-brand span {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* hero */
+    .hero-section {
+      background: linear-gradient(145deg, #0b1a2e, #1a2a40);
+      color: white;
+      padding: 4rem 0 5rem;
+      border-radius: 0 0 40px 40px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-section h1 {
+      font-weight: 800;
+      font-size: calc(2.5rem + 1.8vw);
+      letter-spacing: -0.02em;
+    }
+    .hero-section .btn-hero {
+      background: #ff6b35;
+      border: none;
+      padding: 0.9rem 2.8rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #fff;
+      transition: all 0.2s;
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
+    }
+    .hero-section .btn-hero:hover {
+      background: #e55a2b;
+      transform: scale(1.02);
       color: #fff;
     }
 
-    /* main card – bada, premium feel */
-    .construction-card {
-      max-width: 1100px;
-      width: 100%;
-      background: linear-gradient(145deg, #141a24, #1a212e);
-      border-radius: 4rem 2rem 4rem 2rem;
-      padding: 3.5rem 3rem;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 215, 0, 0.08);
-      backdrop-filter: blur(2px);
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* subtle animated glow */
-    .construction-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -30%;
-      width: 160%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.03), transparent 70%);
-      animation: driftGlow 18s infinite alternate ease-in-out;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes driftGlow {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(8%, 6%) scale(1.2); }
-    }
-
-    /* content layer */
-    .content {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* ===== BIG animated header ===== */
-    .hero-title {
-      font-size: clamp(3.8rem, 14vw, 7rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.25rem 0.75rem;
-    }
-
-    .hero-title .highlight {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: shimmerGold 4s ease-in-out infinite alternate;
-      display: inline-block;
-      padding-right: 0.1em;
-    }
-
-    @keyframes shimmerGold {
-      0% { background-position: 0% 30%; }
-      100% { background-position: 100% 70%; }
-    }
-
-    .hero-title .icon-big {
-      font-size: 0.8em;
-      color: #fbbf24;
-      animation: rotateGear 10s linear infinite;
-      display: inline-block;
-      margin-left: 0.15em;
-    }
-
-    @keyframes rotateGear {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.1); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-
-    /* subtitle */
-    .sub-headline {
-      font-size: clamp(1.4rem, 4vw, 2.6rem);
-      font-weight: 400;
-      color: #cbd5e1;
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.02em;
-      border-left: 5px solid #fbbf24;
-      padding-left: 1.5rem;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-    }
-
-    .sub-headline i {
-      color: #fbbf24;
-      font-size: 0.9em;
-      animation: pulseIcon 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulseIcon {
-      0% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.2); }
-      100% { opacity: 0.6; transform: scale(0.9); }
-    }
-
-    /* animated progress / loader */
-    .loader-area {
-      background: #1f2937;
-      border-radius: 100px;
-      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem 1.5rem;
-      margin: 2.8rem 0 2.8rem 0;
-      box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 6px 12px rgba(0,0,0,0.3);
-      border: 1px solid #374151;
-    }
-
-    .progress-track {
-      flex: 2;
-      min-width: 200px;
-      height: 18px;
-      background: #2d3748;
-      border-radius: 40px;
-      overflow: hidden;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
-      background-size: 200% 100%;
-      border-radius: 40px;
-      animation: fillProgress 2.8s ease-in-out infinite alternate, shimmerBar 3s linear infinite;
-      box-shadow: 0 0 15px #fbbf24aa;
-    }
-
-    @keyframes fillProgress {
-      0% { width: 12%; }
-      100% { width: 92%; }
-    }
-
-    @keyframes shimmerBar {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 200% 0%; }
-    }
-
-    .loader-label {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-weight: 600;
-      color: #e5e7eb;
-      font-size: 1.2rem;
-      letter-spacing: 0.3px;
-      white-space: nowrap;
-    }
-
-    .loader-label i {
-      color: #fbbf24;
-      animation: spin 2s linear infinite;
-      font-size: 1.5rem;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* feature grid – bada & animated */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 1.8rem;
-      margin: 2.8rem 0 2.5rem 0;
-    }
-
-    .feature-item {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(4px);
-      padding: 1.6rem 0.8rem;
-      border-radius: 40px 12px 40px 12px;
-      text-align: center;
-      border: 1px solid #334155;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
-      transition: all 0.25s ease;
-      animation: floatItem 5s ease-in-out infinite alternate;
-      transform-origin: center;
-    }
-
-    .feature-item:nth-child(2) { animation-delay: 0.3s; }
-    .feature-item:nth-child(3) { animation-delay: 0.7s; }
-    .feature-item:nth-child(4) { animation-delay: 1.1s; }
-
-    @keyframes floatItem {
-      0% { transform: translateY(0px) scale(1); }
-      100% { transform: translateY(-10px) scale(1.02); }
-    }
-
-    .feature-item i {
-      font-size: 2.8rem;
-      color: #fbbf24;
-      margin-bottom: 0.6rem;
-      display: block;
-      filter: drop-shadow(0 0 6px #fbbf2466);
-      animation: iconPulse 2.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes iconPulse {
-      0% { transform: scale(0.9); opacity: 0.7; }
-      100% { transform: scale(1.2); opacity: 1; }
-    }
-
-    .feature-item span {
-      display: block;
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: #f1f5f9;
-      letter-spacing: 0.3px;
-    }
-
-    .feature-item small {
-      display: block;
-      color: #94a3b8;
-      font-size: 0.85rem;
-      margin-top: 0.2rem;
-    }
-
-    /* notify / CTA – bada */
-    .action-area {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.8rem;
-      margin-top: 2rem;
-      padding-top: 1.8rem;
-      border-top: 2px dashed #334155;
-    }
-
-    .action-area .cta-text {
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .action-area .cta-text i {
-      color: #fbbf24;
-      animation: ringBell 2.5s ease-in-out infinite;
-    }
-
-    @keyframes ringBell {
-      0% { transform: rotate(0deg); }
-      10% { transform: rotate(20deg); }
-      20% { transform: rotate(-15deg); }
-      30% { transform: rotate(10deg); }
-      40% { transform: rotate(-5deg); }
-      50% { transform: rotate(4deg); }
-      60%, 100% { transform: rotate(0deg); }
-    }
-
-    .notify-btn {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    /* product cards */
+    .product-card {
+      background: white;
       border: none;
-      padding: 1rem 2.8rem;
-      border-radius: 60px;
+      border-radius: 28px;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+      height: 100%;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+    }
+    .product-card .card-img-top {
+      padding: 1.2rem 1.2rem 0.2rem;
+      border-radius: 28px 28px 0 0;
+      background: #f0f3f7;
+      height: 200px;
+      object-fit: contain;
+      transition: 0.2s;
+    }
+    .product-card:hover .card-img-top {
+      transform: scale(1.02);
+    }
+    .product-card .card-body {
+      padding: 1.25rem 1.2rem 1.2rem;
+    }
+    .product-card .card-title {
       font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .product-card .price {
+      font-weight: 700;
+      color: #1a2a40;
       font-size: 1.4rem;
-      color: #0b0e14;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
-      transition: all 0.2s ease;
-      border: 1px solid #fcd34d;
+      letter-spacing: -0.3px;
+    }
+    .product-card .price small {
+      font-weight: 400;
+      color: #6c7a8a;
+      font-size: 0.85rem;
+      text-decoration: line-through;
+      margin-left: 0.5rem;
+    }
+    .product-card .btn-outline-primary {
+      border-radius: 40px;
+      border-color: #d0d7e1;
+      color: #1a2a40;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+    }
+    .product-card .btn-outline-primary:hover {
+      background: #1a2a40;
+      border-color: #1a2a40;
+      color: white;
+    }
+    .product-card .btn-primary {
+      border-radius: 40px;
+      background: #ff6b35;
+      border: none;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+    }
+    .product-card .btn-primary:hover {
+      background: #e55a2b;
+    }
+    .badge-custom {
+      background: #ff6b35;
+      color: white;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
       letter-spacing: 0.3px;
     }
 
-    .notify-btn i {
-      font-size: 1.6rem;
-      transition: transform 0.25s;
+    /* category pills */
+    .category-pill {
+      background: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 60px;
+      color: #1a2a40;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #e9edf2;
+      transition: 0.15s;
+      text-decoration: none;
+      display: inline-block;
     }
-
-    .notify-btn:hover {
-      transform: scale(1.04) translateY(-4px);
-      box-shadow: 0 14px 30px #fbbf24aa;
-      background: linear-gradient(135deg, #fcd34d, #f59e0b);
+    .category-pill:hover {
+      background: #1a2a40;
+      color: white;
+      border-color: #1a2a40;
     }
-
-    .notify-btn:active {
-      transform: scale(0.96);
-    }
-
-    .notify-btn:hover i {
-      transform: rotate(15deg) scale(1.1);
+    .category-pill i {
+      margin-right: 0.5rem;
     }
 
     /* footer */
-    .footer-note {
-      margin-top: 3rem;
-      font-size: 0.95rem;
-      color: #64748b;
-      text-align: center;
-      letter-spacing: 0.5px;
-      border-top: 1px solid #1e293b;
-      padding-top: 1.8rem;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
+    .footer-shop {
+      background: #0b1a2e;
+      color: #b8c7db;
+      border-radius: 40px 40px 0 0;
+      padding: 3rem 0 2rem;
+      margin-top: 3.5rem;
+    }
+    .footer-shop h5 {
+      color: white;
+      font-weight: 700;
+    }
+    .footer-shop a {
+      color: #b8c7db;
+      text-decoration: none;
+    }
+    .footer-shop a:hover {
+      color: #ff6b35;
+    }
+    .footer-shop .social-icon {
+      font-size: 1.6rem;
+      margin-right: 1rem;
+      color: #b8c7db;
+      transition: 0.2s;
+    }
+    .footer-shop .social-icon:hover {
+      color: #ff6b35;
+      transform: scale(1.05);
     }
 
-    .footer-note i {
-      margin: 0 0.3rem;
-      color: #fbbf24;
-    }
-
-    /* responsive */
-    @media (max-width: 700px) {
-      .construction-card {
-        padding: 2rem 1.5rem;
-        border-radius: 2.5rem 1.2rem 2.5rem 1.2rem;
+    /* responsive spacing */
+    @media (max-width: 576px) {
+      .hero-section {
+        padding: 2.5rem 0 3rem;
+        border-radius: 0 0 28px 28px;
       }
-      .hero-title {
-        font-size: clamp(2.8rem, 16vw, 4.5rem);
+      .product-card .card-img-top {
+        height: 160px;
       }
-      .sub-headline {
-        font-size: 1.2rem;
-        padding-left: 1rem;
-      }
-      .loader-area {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem 1rem;
-      }
-      .loader-label {
-        justify-content: center;
-      }
-      .action-area {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .notify-btn {
-        justify-content: center;
-        padding: 0.9rem 1.8rem;
-        font-size: 1.2rem;
-      }
-      .feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 460px) {
-      .feature-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .hero-title .icon-big {
-        font-size: 0.6em;
+      .category-pill {
+        padding: 0.4rem 1.2rem;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="construction-card">
-    <div class="content">
-      
-      <!-- BIG animated heading -->
-      <h1 class="hero-title">
-        <span class="highlight">Under</span>
-        <span class="highlight" style="animation-delay: 0.5s;">Construction</span>
-        <i class="fas fa-cog icon-big"></i>
-      </h1>
-      
-      <!-- Sub-headline with animated icon -->
-      <div class="sub-headline">
-        <i class="fas fa-store-alt"></i> 
-        <span>E‑commerce reimagined · <strong style="color:#fbbf24;">coming soon</strong></span>
-        <i class="fas fa-arrow-right" style="margin-left: 0.3rem;"></i>
-      </div>
 
-      <!-- animated progress loader – bada -->
-      <div class="loader-area">
-        <div class="progress-track">
-          <div class="progress-fill"></div>
-        </div>
-        <div class="loader-label">
-          <i class="fas fa-sync-alt"></i> 
-          <span>building experience</span>
-        </div>
-      </div>
-
-      <!-- feature grid – animated floating items -->
-      <div class="feature-grid">
-        <div class="feature-item">
-          <i class="fas fa-rocket"></i>
-          <span>Blazing fast</span>
-          <small>edge‑ready</small>
-        </div>
-        <div class="feature-item">
-          <i class="fas fa-palette"></i>
-          <span>Fresh UI</span>
-          <small>3D & glassmorphism</small>
-        </div>
-        <div class="feature-item">
-          <i class="fas fa-cart-plus"></i>
-          <span>Smart cart</span>
-          <small>AI‑assisted</small>
-        </div>
-        <div class="feature-item">
-          <i class="fas fa-shield-alt"></i>
-          <span>Secure</span>
-          <small>privacy first</small>
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-3" href="#">
+        <i class="bi bi-bag-heart-fill"></i> <span>Shop</span>Verse
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" 
+              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2 fw-semibold">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Deals</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="text-dark fs-5"><i class="bi bi-search"></i></a>
+          <a href="#" class="text-dark fs-5 position-relative">
+            <i class="bi bi-cart3"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+              3
+            </span>
+          </a>
+          <a href="#" class="btn btn-dark rounded-pill px-4 d-none d-sm-inline-block">Sign in</a>
         </div>
       </div>
+    </div>
+  </nav>
 
-      <!-- CTA + notify – bada animated -->
-      <div class="action-area">
-        <div class="cta-text">
-          <i class="fas fa-bell"></i> 
-          <span>Get notified when we launch</span>
+  <!-- ========== HERO ========== -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <span class="badge bg-warning text-dark mb-3 px-4 py-2 rounded-pill fw-semibold">
+            <i class="bi bi-fire"></i> summer sale
+          </span>
+          <h1 class="display-3 fw-bold">Discover <br>your <span style="color: #ff6b35;">style</span> edge</h1>
+          <p class="lead text-white-50 mt-3" style="max-width: 450px;">
+            Premium quality, curated collections. Elevate your everyday with pieces that speak.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#" class="btn btn-hero"><i class="bi bi-arrow-right-circle"></i> Shop now</a>
+            <a href="#" class="btn btn-outline-light rounded-pill px-4">Explore</a>
+          </div>
         </div>
-        <button class="notify-btn" onclick="alert('🚀 We’ll ping you! (demo)')">
-          <i class="fas fa-envelope"></i> Notify me
-        </button>
+        <div class="col-lg-6 text-center text-lg-end">
+          <img src="https://placehold.co/600x350/1a2a40/white?text=✨+Modern+Style" 
+               alt="hero visual" class="img-fluid rounded-5 shadow-lg" style="max-height: 320px; width: auto;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CATEGORY PILLS ========== -->
+  <div class="container mb-5">
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="#" class="category-pill"><i class="bi bi-grid"></i> All</a>
+      <a href="#" class="category-pill"><i class="bi bi-tag"></i> New</a>
+      <a href="#" class="category-pill"><i class="bi bi-percent"></i> Sale</a>
+      <a href="#" class="category-pill"><i class="bi bi-layers"></i> Accessories</a>
+      <a href="#" class="category-pill"><i class="bi bi-shoe-prints"></i> Footwear</a>
+      <a href="#" class="category-pill"><i class="bi bi-clock"></i> Trending</a>
+    </div>
+  </div>
+
+  <!-- ========== PRODUCT GRID ========== -->
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold"><i class="bi bi-grid-3x3-gap-fill me-2" style="color: #ff6b35;"></i> Trending now</h3>
+      <a href="#" class="text-decoration-none fw-semibold" style="color: #ff6b35;">View all <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+    <div class="row g-4">
+      <!-- product 1 -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="card product-card">
+          <img src="https://placehold.co/400x300/f0f3f7/333?text=🕶️+Classic" class="card-img-top" alt="product">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="badge-custom">-15%</span>
+              <i class="bi bi-heart fs-5 text-secondary" style="cursor: pointer;"></i>
+            </div>
+            <h5 class="card-title mt-2">Aviator shades</h5>
+            <div class="price">$49.99 <small>$58.99</small></div>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="btn btn-outline-primary flex-fill"><i class="bi bi-eye"></i> Quick</a>
+              <a href="#" class="btn btn-primary flex-fill"><i class="bi bi-cart-plus"></i> Add</a>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- footer / social vibe -->
-      <div class="footer-note">
-        <span><i class="fas fa-code"></i> built with <i class="fas fa-heart" style="color:#f43f5e;"></i> for the future</span>
-        <span><i class="fas fa-calendar-alt"></i> launch: 2026</span>
-        <span><i class="fas fa-globe"></i> .shop</span>
+      <!-- product 2 -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="card product-card">
+          <img src="https://placehold.co/400x300/f0f3f7/333?text=👟+Sneaker" class="card-img-top" alt="product">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="badge-custom">New</span>
+              <i class="bi bi-heart fs-5 text-secondary" style="cursor: pointer;"></i>
+            </div>
+            <h5 class="card-title mt-2">Air Max·ultra</h5>
+            <div class="price">$89.99</div>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="btn btn-outline-primary flex-fill"><i class="bi bi-eye"></i> Quick</a>
+              <a href="#" class="btn btn-primary flex-fill"><i class="bi bi-cart-plus"></i> Add</a>
+            </div>
+          </div>
+        </div>
       </div>
 
-    </div> <!-- /content -->
-  </div> <!-- /construction-card -->
+      <!-- product 3 -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="card product-card">
+          <img src="https://placehold.co/400x300/f0f3f7/333?text=⌚+Smartwatch" class="card-img-top" alt="product">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="badge-custom">-20%</span>
+              <i class="bi bi-heart fs-5 text-secondary" style="cursor: pointer;"></i>
+            </div>
+            <h5 class="card-title mt-2">Chrono·fit</h5>
+            <div class="price">$129.99 <small>$162.00</small></div>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="btn btn-outline-primary flex-fill"><i class="bi bi-eye"></i> Quick</a>
+              <a href="#" class="btn btn-primary flex-fill"><i class="bi bi-cart-plus"></i> Add</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- product 4 -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="card product-card">
+          <img src="https://placehold.co/400x300/f0f3f7/333?text=🎒+Backpack" class="card-img-top" alt="product">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="badge-custom">Eco</span>
+              <i class="bi bi-heart fs-5 text-secondary" style="cursor: pointer;"></i>
+            </div>
+            <h5 class="card-title mt-2">Urban pack</h5>
+            <div class="price">$64.99</div>
+            <div class="d-flex gap-2 mt-3">
+              <a href="#" class="btn btn-outline-primary flex-fill"><i class="bi bi-eye"></i> Quick</a>
+              <a href="#" class="btn btn-primary flex-fill"><i class="bi bi-cart-plus"></i> Add</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== BANNER / PROMO (extra row) ========== -->
+  <div class="container my-5">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="bg-white p-4 rounded-4 shadow-sm d-flex align-items-center gap-3">
+          <i class="bi bi-truck fs-1" style="color: #ff6b35;"></i>
+          <div>
+            <h5 class="fw-bold mb-0">Free shipping</h5>
+            <p class="text-secondary mb-0">on orders over $75</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="bg-white p-4 rounded-4 shadow-sm d-flex align-items-center gap-3">
+          <i class="bi bi-arrow-repeat fs-1" style="color: #ff6b35;"></i>
+          <div>
+            <h5 class="fw-bold mb-0">30-day returns</h5>
+            <p class="text-secondary mb-0">hassle free</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer-shop">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5><i class="bi bi-bag-heart-fill me-2" style="color: #ff6b35;"></i>ShopVerse</h5>
+          <p class="mt-3" style="max-width: 280px;">Curated essentials for the modern lifestyle. Quality, comfort, and style — delivered.</p>
+          <div class="mt-3">
+            <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2">
+          <h5 class="fw-semibold">Shop</h5>
+          <ul class="list-unstyled mt-3">
+            <li><a href="#">New</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">Accessories</a></li>
+            <li><a href="#">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-md-2">
+          <h5 class="fw-semibold">Help</h5>
+          <ul class="list-unstyled mt-3">
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5 class="fw-semibold">Stay in the loop</h5>
+          <p class="mt-3">Subscribe for exclusive drops & offers.</p>
+          <div class="input-group">
+            <input type="email" class="form-control rounded-start-4" placeholder="Your email" aria-label="email">
+            <button class="btn" style="background: #ff6b35; color: white; border-radius: 0 40px 40px 0;" type="button">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="border-top border-secondary border-opacity-25 mt-4 pt-3 text-center text-white-50">
+        &copy; 2026 ShopVerse — built with <i class="bi bi-heart-fill" style="color: #ff6b35;"></i> and Bootstrap
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (for toggles, etc.) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
