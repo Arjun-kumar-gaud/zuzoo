@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zuzoo - E-commerce</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: white;
+    }
+
+    .hero h2 {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #666;
+    }
+
+    .products {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .products h2 {
+      margin-bottom: 25px;
+    }
+
+    #product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .product img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #eee;
+    }
+
+    .product h3 {
+      margin: 12px 0 8px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e63946;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      background: #111;
+      color: white;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 25px;
+      text-align: center;
+      background: #111;
+      color: white;
+    }
+
+    #firebase-status {
+      text-align: center;
+      padding: 10px;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Zuzoo</h1>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Products</a>
+      <a href="#">Cart</a>
+      <a href="#">Login</a>
+    </nav>
+  </header>
+
+  <div id="firebase-status">
+    Connecting to Firebase...
+  </div>
+
+  <section class="hero">
+    <h2>Welcome to Zuzoo</h2>
+    <p>Shop your favorite products online.</p>
+  </section>
+
+  <section class="products" id="products">
+    <h2>Our Products</h2>
+
+    <div id="product-list">
+      <p>Products will appear here.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Zuzoo. All rights reserved.</p>
+  </footer>
+
+
+  <!-- Firebase -->
+  <script type="module">
+
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVMATK68o-lLNI2ESxY2FTvrtwiPBeTRY",
+      authDomain: "zuzoo-6afa5.firebaseapp.com",
+      projectId: "zuzoo-6afa5",
+      storageBucket: "zuzoo-6afa5.firebasestorage.app",
+      messagingSenderId: "560745524336",
+      appId: "1:560745524336:web:3db8ae577ccb65456598b5",
+      measurementId: "G-RR5MN45J4S"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    console.log("Firebase connected:", app.name);
+
+    document.getElementById("firebase-status").textContent =
+      "Firebase connected successfully";
+
+  </script>
+
+</body>
+</html>
