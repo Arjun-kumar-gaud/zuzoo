@@ -3,7 +3,9 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-import { auth } from "./firebase.js";
+import {
+  auth
+} from "./firebase.js";
 
 
 const adminEmail =
@@ -13,42 +15,48 @@ const logoutButton =
   document.getElementById("logoutButton");
 
 
-// Check login
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(
+  auth,
+  (user) => {
 
-  if (!user) {
-    window.location.replace("index.html");
-    return;
+    if (!user) {
+
+      window.location.href =
+        "index.html";
+
+      return;
+
+    }
+
+
+    adminEmail.textContent =
+      user.email;
+
   }
-
-  adminEmail.textContent = user.email;
-
-});
+);
 
 
 // Logout
-logoutButton.addEventListener("click", async () => {
 
-  logoutButton.disabled = true;
-  logoutButton.textContent = "Logging out...";
+logoutButton.addEventListener(
+  "click",
+  async () => {
 
-  try {
+    try {
 
-    await signOut(auth);
+      await signOut(auth);
 
-    console.log("Logout successful");
+      window.location.href =
+        "index.html";
 
-    window.location.replace("index.html");
+    } catch (error) {
 
-  } catch (error) {
+      console.error(
+        "Logout error:",
+        error
+      );
 
-    console.error("Logout error:", error);
-
-    logoutButton.disabled = false;
-    logoutButton.textContent = "🚪 Logout";
-
-    alert("Logout failed: " + error.message);
+    }
 
   }
-
-});
+);
