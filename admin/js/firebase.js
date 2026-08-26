@@ -27,3 +27,11 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { app, auth, db };
+
+import {
+  getStorage
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
+
+const storage = getStorage(app);
+
+export { app, auth, db, storage };
