@@ -1,1 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Zuzoo Admin Dashboard</title>
+
+  <link rel="stylesheet"
+        href="css/admin.css">
+
+</head>
+
+
+<body class="dashboard-body">
+
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">
+
+      <div class="small-logo">
+        Z
+      </div>
+
+      <div>
+        <strong>ZUZOO</strong>
+        <span>ADMIN</span>
+      </div>
+
+    </div>
+
+
+    <nav>
+
+      <a href="#" class="nav-link active">
+        🏠
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#" class="nav-link">
+        📦
+        <span>Products</span>
+      </a>
+
+      <a href="#" class="nav-link">
+        🛒
+        <span>Orders</span>
+      </a>
+
+      <a href="#" class="nav-link">
+        👥
+        <span>Customers</span>
+      </a>
+
+      <a href="#" class="nav-link">
+        🗂️
+        <span>Categories</span>
+      </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+      <button id="logoutButton">
+        🚪 Logout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="dashboard-main">
+
+
+    <header class="dashboard-header">
+
+      <div>
+
+        <h1>Dashboard</h1>
+
+        <p>
+          Welcome back, Admin 👋
+        </p>
+
+      </div>
+
+
+      <div class="admin-profile">
+
+        <div class="profile-avatar">
+          A
+        </div>
+
+        <div>
+
+          <strong id="adminEmail">
+            Admin
+          </strong>
+
+          <small>
+            Administrator
+          </small>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- STATS -->
+
+    <section class="stats-grid">
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon purple">
+          📦
+        </div>
+
+        <div>
+
+          <span>Total Products</span>
+
+          <strong id="totalProducts">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon blue">
+          🛒
+        </div>
+
+        <div>
+
+          <span>Total Orders</span>
+
+          <strong id="totalOrders">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon green">
+          👥
+        </div>
+
+        <div>
+
+          <span>Total Customers</span>
+
+          <strong id="totalUsers">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon orange">
+          ₹
+        </div>
+
+        <div>
+
+          <span>Total Sales</span>
+
+          <strong id="totalSales">
+            ₹0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- WELCOME CARD -->
+
+    <section class="welcome-card">
+
+      <div>
+
+        <span>STORE MANAGEMENT</span>
+
+        <h2>
+          Your Zuzoo store is ready 🚀
+        </h2>
+
+        <p>
+          Manage products, orders and customers
+          from your admin panel.
+        </p>
+
+      </div>
+
+      <div class="welcome-icon">
+        🛍️
+      </div>
+
+    </section>
+
+
+    <!-- RECENT ORDERS -->
+
+    <section class="content-card">
+
+      <div class="content-header">
+
+        <div>
+
+          <h2>
+            Recent Orders
+          </h2>
+
+          <p>
+            Latest customer orders
+          </p>
+
+        </div>
+
+        <button class="view-button">
+          View All
+        </button>
+
+      </div>
+
+
+      <div class="empty-orders">
+
+        <div>
+          🛒
+        </div>
+
+        <h3>
+          No orders yet
+        </h3>
+
+        <p>
+          Customer orders will appear here.
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <script
+    type="module"
+    src="js/dashboard.js">
+  </script>
+
+</body>
+
+</html>
