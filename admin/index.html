@@ -1,616 +1,137 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Zuzoo Admin - Add Product</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <title>Zuzoo Admin Login</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      min-height: 100vh;
-    }
+  <link rel="stylesheet"
+        href="css/admin.css">
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 18px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      font-size: 24px;
-    }
-
-    .admin-badge {
-      background: #2563eb;
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 0 15px;
-    }
-
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-    }
-
-    .card h2 {
-      margin-bottom: 8px;
-      font-size: 24px;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 25px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-      background: white;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #2563eb;
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-
-    .image-preview {
-      margin-top: 12px;
-      display: none;
-      text-align: center;
-    }
-
-    .image-preview img {
-      max-width: 220px;
-      max-height: 220px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid #ddd;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    button:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
-
-    #message {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 8px;
-      display: none;
-      text-align: center;
-    }
-
-    .success {
-      display: block !important;
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .error {
-      display: block !important;
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #777;
-    }
-
-    @media (max-width: 600px) {
-      .row {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-
-      .card {
-        padding: 20px;
-      }
-
-      header h1 {
-        font-size: 20px;
-      }
-    }
-  </style>
 </head>
 
-<body>
 
-<header>
-  <h1>Zuzoo Admin</h1>
-  <span class="admin-badge">Product Manager</span>
-</header>
+<body class="login-body">
 
-<main class="container">
 
-  <div class="card">
+  <div class="login-container">
 
-    <h2>Add New Product</h2>
 
-    <p class="subtitle">
-      Add a product to your Zuzoo store.
-    </p>
+    <div class="login-card">
 
-    <form id="productForm">
 
-      <!-- Product Name -->
-      <div class="form-group">
-        <label for="productName">Product Name</label>
+      <div class="logo">
 
-        <input
-          type="text"
-          id="productName"
-          placeholder="Enter product name"
-          required
-        >
+        <div class="logo-icon">
+          Z
+        </div>
+
+        <h1>ZUZOO</h1>
+
+        <span>ADMIN PANEL</span>
+
       </div>
 
 
-      <!-- Price + Stock -->
-      <div class="row">
+      <div class="login-heading">
 
-        <div class="form-group">
-          <label for="price">Price (₹)</label>
+        <h2>Welcome Back 👋</h2>
+
+        <p>
+          Login to manage your Zuzoo store
+        </p>
+
+      </div>
+
+
+      <form id="loginForm">
+
+
+        <div class="input-group">
+
+          <label for="email">
+            Email Address
+          </label>
 
           <input
-            type="number"
-            id="price"
-            placeholder="499"
-            min="0"
-            step="0.01"
+            type="email"
+            id="email"
+            placeholder="admin@zuzoo.com"
             required
           >
-        </div>
-
-
-        <div class="form-group">
-          <label for="stock">Stock</label>
-
-          <input
-            type="number"
-            id="stock"
-            placeholder="20"
-            min="0"
-            required
-          >
-        </div>
-
-      </div>
-
-
-      <!-- Category -->
-      <div class="form-group">
-
-        <label for="category">Category</label>
-
-        <select id="category" required>
-
-          <option value="">Select Category</option>
-
-          <option value="Men">Men</option>
-
-          <option value="Women">Women</option>
-
-          <option value="Kids">Kids</option>
-
-          <option value="Electronics">Electronics</option>
-
-          <option value="Beauty">Beauty</option>
-
-          <option value="Home">Home</option>
-
-          <option value="Other">Other</option>
-
-        </select>
-
-      </div>
-
-
-      <!-- Description -->
-      <div class="form-group">
-
-        <label for="description">Description</label>
-
-        <textarea
-          id="description"
-          placeholder="Enter product description"
-          required
-        ></textarea>
-
-      </div>
-
-
-      <!-- Image URL -->
-      <div class="form-group">
-
-        <label for="image">Product Image URL</label>
-
-        <input
-          type="url"
-          id="image"
-          placeholder="https://example.com/product.jpg"
-          required
-        >
-
-        <div class="image-preview" id="imagePreview">
-
-          <img id="previewImage" src="" alt="Product Preview">
 
         </div>
 
+
+        <div class="input-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <div class="password-box">
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword">
+              👁
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="loginMessage"
+          class="login-message">
+        </div>
+
+
+        <button
+          type="submit"
+          id="loginButton"
+          class="login-button">
+
+          <span id="buttonText">
+            Login to Dashboard
+          </span>
+
+        </button>
+
+
+      </form>
+
+
+      <div class="login-footer">
+
+        <span>🔒 Secure Admin Access</span>
+
       </div>
 
 
-      <!-- Submit -->
-      <button
-        type="submit"
-        id="addProductButton"
-      >
-        Add Product
-      </button>
+    </div>
 
-    </form>
-
-
-    <div id="message"></div>
 
   </div>
 
-</main>
 
-
-<footer>
-  © 2026 Zuzoo
-</footer>
-
-
-<script type="module">
-
-  // Firebase App
-  import {
-    initializeApp
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-  // Firestore
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-  // Firebase Configuration
-  const firebaseConfig = {
-
-    apiKey: "AIzaSyBVMATK68o-lLNI2ESxY2FTvrtwiPBeTRY",
-
-    authDomain: "zuzoo-6afa5.firebaseapp.com",
-
-    projectId: "zuzoo-6afa5",
-
-    storageBucket: "zuzoo-6afa5.firebasestorage.app",
-
-    messagingSenderId: "560745524336",
-
-    appId: "1:560745524336:web:3db8ae577ccb65456598b5",
-
-    measurementId: "G-RR5MN45J4S"
-
-  };
-
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  const db = getFirestore(app);
-
-
-  console.log("Firebase connected:", app.name);
-
-
-  // Form
-  const productForm =
-    document.getElementById("productForm");
-
-
-  const productName =
-    document.getElementById("productName");
-
-
-  const price =
-    document.getElementById("price");
-
-
-  const stock =
-    document.getElementById("stock");
-
-
-  const category =
-    document.getElementById("category");
-
-
-  const description =
-    document.getElementById("description");
-
-
-  const image =
-    document.getElementById("image");
-
-
-  const addProductButton =
-    document.getElementById("addProductButton");
-
-
-  const message =
-    document.getElementById("message");
-
-
-  const imagePreview =
-    document.getElementById("imagePreview");
-
-
-  const previewImage =
-    document.getElementById("previewImage");
-
-
-  // Image preview
-  image.addEventListener("input", () => {
-
-    const imageUrl = image.value.trim();
-
-    if (!imageUrl) {
-
-      imagePreview.style.display = "none";
-
-      return;
-
-    }
-
-    previewImage.src = imageUrl;
-
-    imagePreview.style.display = "block";
-
-  });
-
-
-  // Image error
-  previewImage.addEventListener("error", () => {
-
-    imagePreview.style.display = "none";
-
-  });
-
-
-  // Form submit
-  productForm.addEventListener("submit", async (event) => {
-
-    event.preventDefault();
-
-
-    const name = productName.value.trim();
-
-    const productPrice = Number(price.value);
-
-    const productStock = Number(stock.value);
-
-    const productCategory = category.value;
-
-    const productDescription =
-      description.value.trim();
-
-    const productImage =
-      image.value.trim();
-
-
-    // Validation
-    if (!name) {
-
-      showMessage("Please enter product name.", "error");
-
-      return;
-
-    }
-
-
-    if (productPrice < 0) {
-
-      showMessage("Price cannot be negative.", "error");
-
-      return;
-
-    }
-
-
-    if (productStock < 0) {
-
-      showMessage("Stock cannot be negative.", "error");
-
-      return;
-
-    }
-
-
-    if (!productCategory) {
-
-      showMessage("Please select a category.", "error");
-
-      return;
-
-    }
-
-
-    if (!productDescription) {
-
-      showMessage("Please enter product description.", "error");
-
-      return;
-
-    }
-
-
-    if (!productImage) {
-
-      showMessage("Please enter product image URL.", "error");
-
-      return;
-
-    }
-
-
-    // Disable button
-    addProductButton.disabled = true;
-
-    addProductButton.textContent = "Adding Product...";
-
-
-    try {
-
-      // Save product
-      const docRef = await addDoc(
-        collection(db, "products"),
-        {
-
-          name: name,
-
-          price: productPrice,
-
-          stock: productStock,
-
-          category: productCategory,
-
-          description: productDescription,
-
-          image: productImage,
-
-          createdAt: serverTimestamp()
-
-        }
-      );
-
-
-      console.log(
-        "Product added:",
-        docRef.id
-      );
-
-
-      showMessage(
-        "Product added successfully! ✅",
-        "success"
-      );
-
-
-      // Reset form
-      productForm.reset();
-
-      imagePreview.style.display = "none";
-
-
-    } catch (error) {
-
-      console.error(
-        "Firestore error:",
-        error
-      );
-
-
-      showMessage(
-        "Error: " + error.message,
-        "error"
-      );
-
-    }
-
-
-    // Enable button
-    addProductButton.disabled = false;
-
-    addProductButton.textContent = "Add Product";
-
-  });
-
-
-  // Message
-  function showMessage(text, type) {
-
-    message.textContent = text;
-
-    message.className = type;
-
-  }
-
-</script>
+  <script type="module"
+          src="js/auth.js">
+  </script>
 
 </body>
+
 </html>
-```
