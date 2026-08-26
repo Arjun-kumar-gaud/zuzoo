@@ -9,6 +9,10 @@ import {
   getFirestore
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+import {
+  getStorage
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVMATK68o-lLNI2ESxY2FTvrtwiPBeTRY",
@@ -25,13 +29,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-export { app, auth, db };
-
-import {
-  getStorage
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
-
 const storage = getStorage(app);
+
 
 export { app, auth, db, storage };
