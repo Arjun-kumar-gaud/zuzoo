@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta name="viewport"
@@ -117,12 +116,6 @@
       border-radius: 10px;
       padding: 20px;
       text-align: center;
-      cursor: pointer;
-    }
-
-    .image-box input {
-      border: none;
-      padding: 10px 0;
     }
 
     #imagePreview {
@@ -248,30 +241,25 @@
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
 
   <!-- TOP BAR -->
 
   <div class="topbar">
 
     <div>
-
       <h1>Products</h1>
 
-      <p>Manage your Zuzoo products</p>
-
+      <p>
+        Manage your Zuzoo products
+      </p>
     </div>
 
     <a href="dashboard.html"
        class="back-btn">
-
       ← Dashboard
-
     </a>
 
   </div>
@@ -283,12 +271,9 @@
 
     <h2>➕ Add New Product</h2>
 
-
     <form id="productForm">
 
-
       <div class="form-grid">
-
 
         <div class="form-group">
 
@@ -431,7 +416,6 @@
 
         </div>
 
-
       </div>
 
 
@@ -449,7 +433,6 @@
         id="message"
         class="message">
       </div>
-
 
     </form>
 
@@ -472,18 +455,14 @@
 
   </div>
 
-
 </div>
-
 
 
 <script type="module">
 
-
   import {
     auth,
-    db,
-    storage
+    db
   } from "../js/firebase.js";
 
 
@@ -502,12 +481,12 @@
   } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-  import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-    deleteObject
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
+  /*
+    Cloudflare Worker URL
+  */
+
+  const WORKER_URL =
+    "https://zuzoo-image-upload.gaudarjunkumar153.workers.dev";
 
 
   const productForm =
@@ -537,13 +516,16 @@
   let selectedImage = null;
 
 
-  // AUTH CHECK
+  /*
+    AUTH CHECK
+  */
 
   onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
-      window.location.href = "login.html";
+      window.location.href =
+        "login.html";
 
       return;
 
@@ -554,18 +536,22 @@
   });
 
 
-
-  // IMAGE PREVIEW
+  /*
+    IMAGE PREVIEW
+  */
 
   imageInput.addEventListener(
     "change",
     function () {
 
-      selectedImage = this.files[0];
+      selectedImage =
+        this.files[0];
+
 
       if (!selectedImage) {
 
-        imagePreview.style.display = "none";
+        imagePreview.style.display =
+          "none";
 
         return;
 
@@ -581,6 +567,31 @@
 
         this.value = "";
 
+        selectedImage = null;
+
+        return;
+
+      }
+
+
+      /*
+        5 MB limit
+      */
+
+      if (selectedImage.size > 5 * 1024 * 1024) {
+
+        showMessage(
+          "Image must be smaller than 5 MB.",
+          "error"
+        );
+
+        this.value = "";
+
+        selectedImage = null;
+
+        imagePreview.style.display =
+          "none";
+
         return;
 
       }
@@ -590,13 +601,16 @@
         new FileReader();
 
 
-      reader.onload = function (e) {
+      reader.onload =
+        function (e) {
 
-        imagePreview.src = e.target.result;
+          imagePreview.src =
+            e.target.result;
 
-        imagePreview.style.display = "block";
+          imagePreview.style.display =
+            "block";
 
-      };
+        };
 
 
       reader.readAsDataURL(selectedImage);
@@ -605,8 +619,55 @@
   );
 
 
+  /*
+    CONVERT FILE → BASE64
+  */
 
-  // ADD PRODUCT
+  function fileToBase64(file) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          () => {
+
+            const result =
+              reader.result;
+
+
+            /*
+              Remove:
+              data:image/png;base64,
+            */
+
+            const base64 =
+              result.split(",")[1];
+
+
+            resolve(base64);
+
+          };
+
+
+        reader.onerror =
+          reject;
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+  }
+
+
+  /*
+    ADD PRODUCT
+  */
 
   productForm.addEventListener(
     "submit",
@@ -629,31 +690,39 @@
 
       try {
 
-        addProductBtn.disabled = true;
+        addProductBtn.disabled =
+          true;
+
 
         addProductBtn.textContent =
-          "Uploading...";
+          "Uploading Image...";
 
 
         const name =
-          document.getElementById("productName")
-          .value
-          .trim();
+          document
+            .getElementById("productName")
+            .value
+            .trim();
 
 
         const category =
-          document.getElementById("category")
-          .value;
+          document
+            .getElementById("category")
+            .value;
 
 
         const price =
           Number(
-            document.getElementById("price").value
+            document
+              .getElementById("price")
+              .value
           );
 
 
         const salePriceValue =
-          document.getElementById("salePrice").value;
+          document
+            .getElementById("salePrice")
+            .value;
 
 
         const salePrice =
@@ -664,70 +733,117 @@
 
         const stock =
           Number(
-            document.getElementById("stock").value
+            document
+              .getElementById("stock")
+              .value
           );
 
 
         const description =
-          document.getElementById("description")
-          .value
-          .trim();
+          document
+            .getElementById("description")
+            .value
+            .trim();
 
 
-        // CREATE IMAGE NAME
+        /*
+          FILE → BASE64
+        */
 
-        const fileName =
-          Date.now() +
-          "_" +
-          selectedImage.name
-            .replace(/\s+/g, "_");
-
-
-        const storageRef =
-          ref(
-            storage,
-            "products/" + fileName
+        const fileBase64 =
+          await fileToBase64(
+            selectedImage
           );
 
 
-        // UPLOAD IMAGE
+        /*
+          SEND IMAGE TO CLOUDFLARE WORKER
+        */
 
-        await uploadBytes(
-          storageRef,
-          selectedImage
-        );
+        const uploadResponse =
+          await fetch(
+            WORKER_URL,
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+
+                  fileName:
+                    selectedImage.name,
+
+                  fileBase64:
+                    fileBase64
+
+                })
+
+            }
+          );
+
+
+        const uploadData =
+          await uploadResponse.json();
+
+
+        if (!uploadResponse.ok ||
+            !uploadData.success) {
+
+          throw new Error(
+            uploadData.message ||
+            "Image upload failed."
+          );
+
+        }
 
 
         const imageUrl =
-          await getDownloadURL(storageRef);
+          uploadData.imageUrl;
 
+
+        /*
+          SAVE PRODUCT IN FIRESTORE
+        */
 
         addProductBtn.textContent =
-          "Saving...";
+          "Saving Product...";
 
-
-        // SAVE FIRESTORE
 
         await addDoc(
-          collection(db, "products"),
+          collection(
+            db,
+            "products"
+          ),
           {
 
-            name: name,
+            name:
+              name,
 
-            category: category,
+            category:
+              category,
 
-            price: price,
+            price:
+              price,
 
-            salePrice: salePrice,
+            salePrice:
+              salePrice,
 
-            stock: stock,
+            stock:
+              stock,
 
-            description: description,
+            description:
+              description,
 
-            imageUrl: imageUrl,
+            imageUrl:
+              imageUrl,
 
-            storagePath:
-              "products/" + fileName,
+            githubPath:
+              uploadData.path,
 
             createdAt:
               serverTimestamp()
@@ -735,6 +851,10 @@
           }
         );
 
+
+        /*
+          SUCCESS
+        */
 
         showMessage(
           "Product added successfully! 🎉",
@@ -744,10 +864,13 @@
 
         productForm.reset();
 
+
         imagePreview.style.display =
           "none";
 
-        selectedImage = null;
+
+        selectedImage =
+          null;
 
 
         loadProducts();
@@ -755,17 +878,24 @@
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "ADD PRODUCT ERROR:",
+          error
+        );
+
 
         showMessage(
-          "Error: " + error.message,
+          "Error: " +
+          error.message,
           "error"
         );
 
       }
 
 
-      addProductBtn.disabled = false;
+      addProductBtn.disabled =
+        false;
+
 
       addProductBtn.textContent =
         "Add Product";
@@ -774,8 +904,9 @@
   );
 
 
-
-  // LOAD PRODUCTS
+  /*
+    LOAD PRODUCTS
+  */
 
   async function loadProducts() {
 
@@ -789,7 +920,10 @@
 
       const snapshot =
         await getDocs(
-          collection(db, "products")
+          collection(
+            db,
+            "products"
+          )
         );
 
 
@@ -852,7 +986,7 @@
 
               <img
                 class="product-img"
-                src="${product.imageUrl}"
+                src="${escapeHtml(product.imageUrl || "")}"
                 alt="${escapeHtml(product.name)}">
 
             </td>
@@ -871,10 +1005,11 @@
             <td>
 
               ${
-                salePrice
-                ? `<del>₹${product.price}</del>
-                   ₹${salePrice}`
-                : `₹${product.price}`
+                salePrice !== null &&
+                salePrice !== undefined
+                  ? `<del>₹${product.price}</del>
+                     ₹${salePrice}`
+                  : `₹${product.price}`
               }
 
             </td>
@@ -889,8 +1024,7 @@
 
               <button
                 class="delete-btn"
-                data-id="${item.id}"
-                data-path="${product.storagePath || ""}">
+                data-id="${item.id}">
 
                 Delete
 
@@ -918,7 +1052,9 @@
         html;
 
 
-      // DELETE BUTTONS
+      /*
+        DELETE BUTTONS
+      */
 
       document
         .querySelectorAll(".delete-btn")
@@ -929,8 +1065,7 @@
             () => {
 
               deleteProduct(
-                button.dataset.id,
-                button.dataset.path
+                button.dataset.id
               );
 
             }
@@ -941,7 +1076,11 @@
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        "LOAD PRODUCTS ERROR:",
+        error
+      );
+
 
       productsContainer.innerHTML =
         `<div class="empty">
@@ -953,12 +1092,16 @@
   }
 
 
+  /*
+    DELETE PRODUCT
 
-  // DELETE PRODUCT
+    NOTE:
+    This deletes Firestore data.
+    The GitHub image remains in the repository.
+  */
 
   async function deleteProduct(
-    productId,
-    storagePath
+    productId
   ) {
 
     const confirmed =
@@ -973,29 +1116,12 @@
     try {
 
       await deleteDoc(
-        doc(db, "products", productId)
+        doc(
+          db,
+          "products",
+          productId
+        )
       );
-
-
-      if (storagePath) {
-
-        try {
-
-          const imageRef =
-            ref(storage, storagePath);
-
-          await deleteObject(imageRef);
-
-        } catch (imageError) {
-
-          console.log(
-            "Image delete skipped:",
-            imageError
-          );
-
-        }
-
-      }
 
 
       showMessage(
@@ -1011,8 +1137,10 @@
 
       console.error(error);
 
+
       showMessage(
-        "Delete failed: " + error.message,
+        "Delete failed: " +
+        error.message,
         "error"
       );
 
@@ -1021,18 +1149,22 @@
   }
 
 
-
-  // MESSAGE
+  /*
+    MESSAGE
+  */
 
   function showMessage(
     text,
     type
   ) {
 
-    message.textContent = text;
+    message.textContent =
+      text;
+
 
     message.className =
       "message " + type;
+
 
     message.style.display =
       "block";
@@ -1043,29 +1175,30 @@
       message.style.display =
         "none";
 
-    }, 4000);
+    }, 5000);
 
   }
 
 
-
-  // HTML ESCAPE
+  /*
+    HTML ESCAPE
+  */
 
   function escapeHtml(text) {
 
     const div =
       document.createElement("div");
 
+
     div.textContent =
       text ?? "";
+
 
     return div.innerHTML;
 
   }
 
-
 </script>
-
 
 </body>
 
