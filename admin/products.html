@@ -130,24 +130,6 @@
     }
 
 
-    .image-box {
-      border: 2px dashed #ddd;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-    }
-
-
-    #imagePreview {
-      max-width: 180px;
-      max-height: 180px;
-      margin: 15px auto 0;
-      display: none;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-
     .add-btn {
       margin-top: 20px;
       width: 100%;
@@ -210,14 +192,6 @@
 
     .products-table th {
       background: #fafafa;
-    }
-
-
-    .product-img {
-      width: 55px;
-      height: 55px;
-      border-radius: 8px;
-      object-fit: cover;
     }
 
 
@@ -345,7 +319,6 @@
   </div>
 
 
-
   <!-- ADD PRODUCT -->
 
   <div class="card">
@@ -374,7 +347,6 @@
             required>
 
         </div>
-
 
 
         <!-- CATEGORY -->
@@ -420,7 +392,6 @@
         </div>
 
 
-
         <!-- PRICE -->
 
         <div class="form-group">
@@ -438,7 +409,6 @@
             required>
 
         </div>
-
 
 
         <!-- SALE PRICE -->
@@ -459,7 +429,6 @@
         </div>
 
 
-
         <!-- STOCK -->
 
         <div class="form-group">
@@ -476,66 +445,6 @@
             required>
 
         </div>
-
-
-
-        <!-- IMAGE -->
-
-        <div class="form-group">
-
-          <label>
-            Product Image *
-          </label>
-
-
-          <div class="image-box">
-
-            <input
-              type="file"
-              id="productImage"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              required>
-
-
-            <img
-              id="imagePreview"
-              alt="Image Preview">
-
-          </div>
-
-
-          <!-- UPLOAD PROGRESS -->
-
-          <div
-            class="upload-progress"
-            id="uploadProgress">
-
-            <div class="progress-text">
-
-              <span id="uploadStatus">
-                Uploading image...
-              </span>
-
-              <span id="uploadPercent">
-                0%
-              </span>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-fill"
-                id="progressFill">
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
 
 
         <!-- DESCRIPTION -->
@@ -557,7 +466,6 @@
       </div>
 
 
-
       <!-- ADD BUTTON -->
 
       <button
@@ -568,7 +476,6 @@
         Add Product
 
       </button>
-
 
 
       <!-- MESSAGE -->
@@ -582,7 +489,6 @@
     </form>
 
   </div>
-
 
 
   <!-- PRODUCT LIST -->
@@ -606,7 +512,6 @@
 </div>
 
 
-
 <script type="module">
 
 
@@ -615,36 +520,6 @@
   FIREBASE
   =====================================================
   */
-
-  import {
-    auth,
-    db,
-    storage
-  } from "./js/firebase.js";
-
-
-  import {
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-  import {
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-  import {
-    ref,
-    uploadBytesResumable,
-    getDownloadURL,
-    deleteObject
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
-
 
 
   /*
@@ -693,7 +568,6 @@
     document.getElementById("progressFill");
 
 
-
   /*
   =====================================================
   SELECTED IMAGE
@@ -701,7 +575,6 @@
   */
 
   let selectedImage = null;
-
 
 
   /*
@@ -726,7 +599,6 @@
   });
 
 
-
   /*
   =====================================================
   IMAGE PREVIEW
@@ -739,19 +611,6 @@
 
       selectedImage =
         this.files[0];
-
-
-      if (!selectedImage) {
-
-        imagePreview.style.display =
-          "none";
-
-        return;
-
-      }
-
-
-
       /*
       IMAGE TYPE CHECK
       */
@@ -773,7 +632,6 @@
         return;
 
       }
-
 
 
       /*
@@ -798,7 +656,6 @@
         return;
 
       }
-
 
 
       /*
@@ -827,7 +684,6 @@
   );
 
 
-
   /*
   =====================================================
   ADD PRODUCT
@@ -839,7 +695,6 @@
     async function (e) {
 
       e.preventDefault();
-
 
 
       /*
@@ -858,7 +713,6 @@
       }
 
 
-
       try {
 
 
@@ -872,7 +726,6 @@
 
         addProductBtn.textContent =
           "Uploading Image...";
-
 
 
         /*
@@ -927,7 +780,6 @@
             .trim();
 
 
-
         /*
         =================================================
         CREATE UNIQUE FILE NAME
@@ -961,7 +813,6 @@
           `products/${fileName}`;
 
 
-
         /*
         =================================================
         FIREBASE STORAGE REFERENCE
@@ -975,7 +826,6 @@
           );
 
 
-
         /*
         =================================================
         UPLOAD PROGRESS SHOW
@@ -984,19 +834,6 @@
 
         uploadProgress.style.display =
           "block";
-
-
-        uploadStatus.textContent =
-          "Uploading image...";
-
-
-        uploadPercent.textContent =
-          "0%";
-
-
-        progressFill.style.width =
-          "0%";
-
 
 
         /*
@@ -1017,7 +854,6 @@
                 "public,max-age=31536000"
             }
           );
-
 
 
         /*
@@ -1046,14 +882,6 @@
                         snapshot.totalBytes
                       ) * 100
                     );
-
-
-                  uploadPercent.textContent =
-                    `${progress}%`;
-
-
-                  progressFill.style.width =
-                    `${progress}%`;
 
                 },
 
@@ -1098,7 +926,6 @@
           );
 
 
-
         /*
         =================================================
         SAVE PRODUCT TO FIRESTORE
@@ -1107,10 +934,6 @@
 
         addProductBtn.textContent =
           "Saving Product...";
-
-
-        uploadStatus.textContent =
-          "Image uploaded ✓";
 
 
         await addDoc(
@@ -1151,7 +974,6 @@
         );
 
 
-
         /*
         =================================================
         SUCCESS
@@ -1177,14 +999,6 @@
 
         uploadProgress.style.display =
           "none";
-
-
-        progressFill.style.width =
-          "0%";
-
-
-        uploadPercent.textContent =
-          "0%";
 
 
         loadProducts();
@@ -1254,7 +1068,6 @@
       }
 
 
-
       /*
       ENABLE BUTTON
       */
@@ -1269,7 +1082,6 @@
     }
 
   );
-
 
 
   /*
@@ -1298,7 +1110,6 @@
         );
 
 
-
       if (snapshot.empty) {
 
         productsContainer.innerHTML =
@@ -1311,7 +1122,6 @@
       }
 
 
-
       let html = `
 
         <table class="products-table">
@@ -1320,7 +1130,7 @@
 
             <tr>
 
-              <th>Image</th>
+              
 
               <th>Name</th>
 
@@ -1341,7 +1151,6 @@
       `;
 
 
-
       snapshot.forEach((item) => {
 
 
@@ -1353,20 +1162,9 @@
           product.salePrice;
 
 
-
         html += `
 
           <tr>
-
-            <td>
-
-              <img
-                class="product-img"
-                src="${escapeHtml(product.imageUrl || "")}"
-                alt="${escapeHtml(product.name)}"
-                onerror="this.style.display='none'">
-
-            </td>
 
 
             <td>
@@ -1419,7 +1217,6 @@
       });
 
 
-
       html += `
 
           </tbody>
@@ -1429,10 +1226,8 @@
       `;
 
 
-
       productsContainer.innerHTML =
         html;
-
 
 
       /*
@@ -1449,16 +1244,12 @@
             "click",
             () => {
 
-              deleteProduct(
-                button.dataset.id,
-                button.dataset.storagePath
-              );
+              deleteProduct(button.dataset.id);
 
             }
           );
 
         });
-
 
 
     } catch (error) {
@@ -1478,7 +1269,6 @@
     }
 
   }
-
 
 
   /*
@@ -1502,7 +1292,6 @@
     if (!confirmed) return;
 
 
-
     try {
 
 
@@ -1517,7 +1306,6 @@
           productId
         )
       );
-
 
 
       /*
@@ -1551,7 +1339,6 @@
       }
 
 
-
       showMessage(
         "Product deleted successfully.",
         "success"
@@ -1559,7 +1346,6 @@
 
 
       loadProducts();
-
 
 
     } catch (error) {
@@ -1580,7 +1366,6 @@
     }
 
   }
-
 
 
   /*
@@ -1615,7 +1400,6 @@
     }, 5000);
 
   }
-
 
 
   /*
