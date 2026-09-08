@@ -1,13 +1,16 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>Zuzoo - Productsii</title>
+  <title>Zuzoo - Products</title>
+
 
   <style>
 
@@ -18,16 +21,19 @@
       font-family: Arial, sans-serif;
     }
 
+
     body {
       background: #f5f6fa;
       color: #222;
     }
+
 
     .container {
       max-width: 1100px;
       margin: auto;
       padding: 30px 20px;
     }
+
 
     .topbar {
       display: flex;
@@ -37,14 +43,17 @@
       gap: 15px;
     }
 
+
     .topbar h1 {
       font-size: 28px;
     }
+
 
     .topbar p {
       color: #777;
       margin-top: 5px;
     }
+
 
     .back-btn {
       text-decoration: none;
@@ -55,6 +64,7 @@
       font-size: 14px;
     }
 
+
     .card {
       background: white;
       border-radius: 14px;
@@ -63,10 +73,12 @@
       margin-bottom: 25px;
     }
 
+
     .card h2 {
       margin-bottom: 20px;
       font-size: 21px;
     }
+
 
     .form-grid {
       display: grid;
@@ -74,20 +86,24 @@
       gap: 18px;
     }
 
+
     .form-group {
       display: flex;
       flex-direction: column;
     }
 
+
     .full {
       grid-column: 1 / -1;
     }
+
 
     label {
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 7px;
     }
+
 
     input,
     select,
@@ -100,16 +116,19 @@
       outline: none;
     }
 
+
     input:focus,
     select:focus,
     textarea:focus {
       border-color: #6c5ce7;
     }
 
+
     textarea {
       min-height: 120px;
       resize: vertical;
     }
+
 
     .image-box {
       border: 2px dashed #ddd;
@@ -117,6 +136,7 @@
       padding: 20px;
       text-align: center;
     }
+
 
     #imagePreview {
       max-width: 180px;
@@ -126,6 +146,7 @@
       border-radius: 10px;
       object-fit: cover;
     }
+
 
     .add-btn {
       margin-top: 20px;
@@ -140,14 +161,17 @@
       cursor: pointer;
     }
 
+
     .add-btn:hover {
       background: #5849d6;
     }
+
 
     .add-btn:disabled {
       background: #aaa;
       cursor: not-allowed;
     }
+
 
     .message {
       margin-top: 15px;
@@ -156,20 +180,24 @@
       display: none;
     }
 
+
     .success {
       background: #e8f8ef;
       color: #168344;
     }
+
 
     .error {
       background: #ffe9e9;
       color: #c62828;
     }
 
+
     .products-table {
       width: 100%;
       border-collapse: collapse;
     }
+
 
     .products-table th,
     .products-table td {
@@ -179,9 +207,11 @@
       font-size: 14px;
     }
 
+
     .products-table th {
       background: #fafafa;
     }
+
 
     .product-img {
       width: 55px;
@@ -190,11 +220,13 @@
       object-fit: cover;
     }
 
+
     .empty {
       text-align: center;
       padding: 30px;
       color: #888;
     }
+
 
     .delete-btn {
       border: none;
@@ -205,11 +237,47 @@
       cursor: pointer;
     }
 
+
     .loading {
       text-align: center;
       padding: 25px;
       color: #777;
     }
+
+
+    /* UPLOAD PROGRESS */
+
+    .upload-progress {
+      display: none;
+      margin-top: 15px;
+    }
+
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #eee;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #6c5ce7;
+      transition: width 0.2s ease;
+    }
+
 
     @media(max-width: 700px) {
 
@@ -217,19 +285,23 @@
         grid-template-columns: 1fr;
       }
 
+
       .full {
         grid-column: auto;
       }
+
 
       .topbar {
         align-items: flex-start;
         flex-direction: column;
       }
 
+
       .card {
         padding: 18px;
         overflow-x: auto;
       }
+
 
       .products-table {
         min-width: 700px;
@@ -241,28 +313,37 @@
 
 </head>
 
+
 <body>
 
+
 <div class="container">
+
 
   <!-- TOP BAR -->
 
   <div class="topbar">
 
     <div>
+
       <h1>Products</h1>
 
       <p>
         Manage your Zuzoo products
       </p>
+
     </div>
+
 
     <a href="dashboard.html"
        class="back-btn">
+
       ← Dashboard
+
     </a>
 
   </div>
+
 
 
   <!-- ADD PRODUCT -->
@@ -271,9 +352,14 @@
 
     <h2>➕ Add New Product</h2>
 
+
     <form id="productForm">
 
+
       <div class="form-grid">
+
+
+        <!-- PRODUCT NAME -->
 
         <div class="form-group">
 
@@ -289,6 +375,9 @@
 
         </div>
 
+
+
+        <!-- CATEGORY -->
 
         <div class="form-group">
 
@@ -331,6 +420,9 @@
         </div>
 
 
+
+        <!-- PRICE -->
+
         <div class="form-group">
 
           <label>
@@ -348,6 +440,9 @@
         </div>
 
 
+
+        <!-- SALE PRICE -->
+
         <div class="form-group">
 
           <label>
@@ -363,6 +458,9 @@
 
         </div>
 
+
+
+        <!-- STOCK -->
 
         <div class="form-group">
 
@@ -380,19 +478,24 @@
         </div>
 
 
+
+        <!-- IMAGE -->
+
         <div class="form-group">
 
           <label>
             Product Image *
           </label>
 
+
           <div class="image-box">
 
             <input
               type="file"
               id="productImage"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/gif"
               required>
+
 
             <img
               id="imagePreview"
@@ -400,8 +503,42 @@
 
           </div>
 
+
+          <!-- UPLOAD PROGRESS -->
+
+          <div
+            class="upload-progress"
+            id="uploadProgress">
+
+            <div class="progress-text">
+
+              <span id="uploadStatus">
+                Uploading image...
+              </span>
+
+              <span id="uploadPercent">
+                0%
+              </span>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill"
+                id="progressFill">
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
+
+
+        <!-- DESCRIPTION -->
 
         <div class="form-group full">
 
@@ -416,8 +553,12 @@
 
         </div>
 
+
       </div>
 
+
+
+      <!-- ADD BUTTON -->
 
       <button
         type="submit"
@@ -429,14 +570,19 @@
       </button>
 
 
+
+      <!-- MESSAGE -->
+
       <div
         id="message"
         class="message">
       </div>
 
+
     </form>
 
   </div>
+
 
 
   <!-- PRODUCT LIST -->
@@ -444,6 +590,7 @@
   <div class="card">
 
     <h2>📦 All Products</h2>
+
 
     <div id="productsContainer">
 
@@ -455,14 +602,24 @@
 
   </div>
 
+
 </div>
+
 
 
 <script type="module">
 
+
+  /*
+  =====================================================
+  FIREBASE
+  =====================================================
+  */
+
   import {
     auth,
-    db
+    db,
+    storage
   } from "./js/firebase.js";
 
 
@@ -481,13 +638,20 @@
   } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
+  import {
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+    deleteObject
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
+
+
+
   /*
-    Cloudflare Worker URL
+  =====================================================
+  DOM
+  =====================================================
   */
-
-  const WORKER_URL =
-    "https://zuzoo-image-upload.gaudarjunkumar153.workers.dev";
-
 
   const productForm =
     document.getElementById("productForm");
@@ -513,11 +677,37 @@
     document.getElementById("productsContainer");
 
 
-  let selectedImage = null;
+  const uploadProgress =
+    document.getElementById("uploadProgress");
+
+
+  const uploadStatus =
+    document.getElementById("uploadStatus");
+
+
+  const uploadPercent =
+    document.getElementById("uploadPercent");
+
+
+  const progressFill =
+    document.getElementById("progressFill");
+
 
 
   /*
-    AUTH CHECK
+  =====================================================
+  SELECTED IMAGE
+  =====================================================
+  */
+
+  let selectedImage = null;
+
+
+
+  /*
+  =====================================================
+  AUTH CHECK
+  =====================================================
   */
 
   onAuthStateChanged(auth, (user) => {
@@ -536,8 +726,11 @@
   });
 
 
+
   /*
-    IMAGE PREVIEW
+  =====================================================
+  IMAGE PREVIEW
+  =====================================================
   */
 
   imageInput.addEventListener(
@@ -558,6 +751,11 @@
       }
 
 
+
+      /*
+      IMAGE TYPE CHECK
+      */
+
       if (!selectedImage.type.startsWith("image/")) {
 
         showMessage(
@@ -569,16 +767,21 @@
 
         selectedImage = null;
 
+        imagePreview.style.display =
+          "none";
+
         return;
 
       }
 
 
+
       /*
-        5 MB limit
+      5 MB LIMIT
       */
 
-      if (selectedImage.size > 5 * 1024 * 1024) {
+      if (selectedImage.size >
+          5 * 1024 * 1024) {
 
         showMessage(
           "Image must be smaller than 5 MB.",
@@ -596,6 +799,11 @@
 
       }
 
+
+
+      /*
+      PREVIEW
+      */
 
       const reader =
         new FileReader();
@@ -619,54 +827,11 @@
   );
 
 
-  /*
-    CONVERT FILE → BASE64
-  */
-
-  function fileToBase64(file) {
-
-    return new Promise(
-      (resolve, reject) => {
-
-        const reader =
-          new FileReader();
-
-
-        reader.onload =
-          () => {
-
-            const result =
-              reader.result;
-
-
-            /*
-              Remove:
-              data:image/png;base64,
-            */
-
-            const base64 =
-              result.split(",")[1];
-
-
-            resolve(base64);
-
-          };
-
-
-        reader.onerror =
-          reject;
-
-
-        reader.readAsDataURL(file);
-
-      }
-    );
-
-  }
-
 
   /*
-    ADD PRODUCT
+  =====================================================
+  ADD PRODUCT
+  =====================================================
   */
 
   productForm.addEventListener(
@@ -675,6 +840,11 @@
 
       e.preventDefault();
 
+
+
+      /*
+      IMAGE CHECK
+      */
 
       if (!selectedImage) {
 
@@ -688,7 +858,13 @@
       }
 
 
+
       try {
+
+
+        /*
+        DISABLE BUTTON
+        */
 
         addProductBtn.disabled =
           true;
@@ -697,6 +873,11 @@
         addProductBtn.textContent =
           "Uploading Image...";
 
+
+
+        /*
+        GET FORM VALUES
+        */
 
         const name =
           document
@@ -746,72 +927,190 @@
             .trim();
 
 
+
         /*
-          FILE → BASE64
+        =================================================
+        CREATE UNIQUE FILE NAME
+        =================================================
         */
 
-        const fileBase64 =
-          await fileToBase64(
-            selectedImage
+        const extension =
+          selectedImage.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+        const safeName =
+          name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "")
+            .substring(0, 50);
+
+
+        const uniqueId =
+          crypto.randomUUID();
+
+
+        const fileName =
+          `${safeName || "product"}_${uniqueId}.${extension}`;
+
+
+        const storagePath =
+          `products/${fileName}`;
+
+
+
+        /*
+        =================================================
+        FIREBASE STORAGE REFERENCE
+        =================================================
+        */
+
+        const imageRef =
+          ref(
+            storage,
+            storagePath
           );
 
 
+
         /*
-          SEND IMAGE TO CLOUDFLARE WORKER
+        =================================================
+        UPLOAD PROGRESS SHOW
+        =================================================
         */
 
-        const uploadResponse =
-          await fetch(
-            WORKER_URL,
+        uploadProgress.style.display =
+          "block";
+
+
+        uploadStatus.textContent =
+          "Uploading image...";
+
+
+        uploadPercent.textContent =
+          "0%";
+
+
+        progressFill.style.width =
+          "0%";
+
+
+
+        /*
+        =================================================
+        FIREBASE STORAGE UPLOAD
+        =================================================
+        */
+
+        const uploadTask =
+          uploadBytesResumable(
+            imageRef,
+            selectedImage,
             {
+              contentType:
+                selectedImage.type,
 
-              method: "POST",
+              cacheControl:
+                "public,max-age=31536000"
+            }
+          );
 
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
 
-              body:
-                JSON.stringify({
 
-                  fileName:
-                    selectedImage.name,
+        /*
+        WAIT FOR UPLOAD
+        */
 
-                  fileBase64:
-                    fileBase64
+        const imageUrl =
+          await new Promise(
+            (resolve, reject) => {
 
-                })
+
+              uploadTask.on(
+                "state_changed",
+
+
+                /*
+                PROGRESS
+                */
+
+                (snapshot) => {
+
+                  const progress =
+                    Math.round(
+                      (
+                        snapshot.bytesTransferred /
+                        snapshot.totalBytes
+                      ) * 100
+                    );
+
+
+                  uploadPercent.textContent =
+                    `${progress}%`;
+
+
+                  progressFill.style.width =
+                    `${progress}%`;
+
+                },
+
+
+                /*
+                ERROR
+                */
+
+                (error) => {
+
+                  reject(error);
+
+                },
+
+
+                /*
+                COMPLETE
+                */
+
+                async () => {
+
+                  try {
+
+                    const url =
+                      await getDownloadURL(
+                        uploadTask.snapshot.ref
+                      );
+
+                    resolve(url);
+
+                  } catch (error) {
+
+                    reject(error);
+
+                  }
+
+                }
+
+              );
 
             }
           );
 
 
-        const uploadData =
-          await uploadResponse.json();
-
-
-        if (!uploadResponse.ok ||
-            !uploadData.success) {
-
-          throw new Error(
-            uploadData.message ||
-            "Image upload failed."
-          );
-
-        }
-
-
-        const imageUrl =
-          uploadData.imageUrl;
-
 
         /*
-          SAVE PRODUCT IN FIRESTORE
+        =================================================
+        SAVE PRODUCT TO FIRESTORE
+        =================================================
         */
 
         addProductBtn.textContent =
           "Saving Product...";
+
+
+        uploadStatus.textContent =
+          "Image uploaded ✓";
 
 
         await addDoc(
@@ -842,8 +1141,8 @@
             imageUrl:
               imageUrl,
 
-            githubPath:
-              uploadData.path,
+            storagePath:
+              storagePath,
 
             createdAt:
               serverTimestamp()
@@ -852,8 +1151,11 @@
         );
 
 
+
         /*
-          SUCCESS
+        =================================================
+        SUCCESS
+        =================================================
         */
 
         showMessage(
@@ -873,10 +1175,23 @@
           null;
 
 
+        uploadProgress.style.display =
+          "none";
+
+
+        progressFill.style.width =
+          "0%";
+
+
+        uploadPercent.textContent =
+          "0%";
+
+
         loadProducts();
 
 
       } catch (error) {
+
 
         console.error(
           "ADD PRODUCT ERROR:",
@@ -884,14 +1199,65 @@
         );
 
 
+        /*
+        FIREBASE ERROR MESSAGE
+        */
+
+        let errorMessage =
+          error.message ||
+          "Something went wrong.";
+
+
+        if (
+          error.code ===
+          "storage/unauthorized"
+        ) {
+
+          errorMessage =
+            "Upload permission denied. Please check Firebase Storage Rules.";
+
+        }
+
+
+        if (
+          error.code ===
+          "storage/quota-exceeded"
+        ) {
+
+          errorMessage =
+            "Firebase Storage quota exceeded.";
+
+        }
+
+
+        if (
+          error.code ===
+          "storage/canceled"
+        ) {
+
+          errorMessage =
+            "Image upload was cancelled.";
+
+        }
+
+
         showMessage(
           "Error: " +
-          error.message,
+          errorMessage,
           "error"
         );
 
+
+        uploadProgress.style.display =
+          "none";
+
       }
 
+
+
+      /*
+      ENABLE BUTTON
+      */
 
       addProductBtn.disabled =
         false;
@@ -901,16 +1267,21 @@
         "Add Product";
 
     }
+
   );
 
 
+
   /*
-    LOAD PRODUCTS
+  =====================================================
+  LOAD PRODUCTS
+  =====================================================
   */
 
   async function loadProducts() {
 
     try {
+
 
       productsContainer.innerHTML =
         `<div class="loading">
@@ -927,6 +1298,7 @@
         );
 
 
+
       if (snapshot.empty) {
 
         productsContainer.innerHTML =
@@ -937,6 +1309,7 @@
         return;
 
       }
+
 
 
       let html = `
@@ -968,7 +1341,9 @@
       `;
 
 
+
       snapshot.forEach((item) => {
+
 
         const product =
           item.data();
@@ -976,6 +1351,7 @@
 
         const salePrice =
           product.salePrice;
+
 
 
         html += `
@@ -987,7 +1363,8 @@
               <img
                 class="product-img"
                 src="${escapeHtml(product.imageUrl || "")}"
-                alt="${escapeHtml(product.name)}">
+                alt="${escapeHtml(product.name)}"
+                onerror="this.style.display='none'">
 
             </td>
 
@@ -1007,8 +1384,10 @@
               ${
                 salePrice !== null &&
                 salePrice !== undefined
+
                   ? `<del>₹${product.price}</del>
                      ₹${salePrice}`
+
                   : `₹${product.price}`
               }
 
@@ -1016,7 +1395,7 @@
 
 
             <td>
-              ${product.stock}
+              ${escapeHtml(String(product.stock ?? 0))}
             </td>
 
 
@@ -1024,7 +1403,8 @@
 
               <button
                 class="delete-btn"
-                data-id="${item.id}">
+                data-id="${item.id}"
+                data-storage-path="${escapeHtml(product.storagePath || "")}">
 
                 Delete
 
@@ -1039,6 +1419,7 @@
       });
 
 
+
       html += `
 
           </tbody>
@@ -1048,12 +1429,16 @@
       `;
 
 
+
       productsContainer.innerHTML =
         html;
 
 
+
       /*
-        DELETE BUTTONS
+      =================================================
+      DELETE BUTTONS
+      =================================================
       */
 
       document
@@ -1065,7 +1450,8 @@
             () => {
 
               deleteProduct(
-                button.dataset.id
+                button.dataset.id,
+                button.dataset.storagePath
               );
 
             }
@@ -1074,7 +1460,9 @@
         });
 
 
+
     } catch (error) {
+
 
       console.error(
         "LOAD PRODUCTS ERROR:",
@@ -1092,17 +1480,18 @@
   }
 
 
-  /*
-    DELETE PRODUCT
 
-    NOTE:
-    This deletes Firestore data.
-    The GitHub image remains in the repository.
+  /*
+  =====================================================
+  DELETE PRODUCT
+  =====================================================
   */
 
   async function deleteProduct(
-    productId
+    productId,
+    storagePath
   ) {
+
 
     const confirmed =
       confirm(
@@ -1113,7 +1502,13 @@
     if (!confirmed) return;
 
 
+
     try {
+
+
+      /*
+      DELETE FIRESTORE DOCUMENT
+      */
 
       await deleteDoc(
         doc(
@@ -1122,6 +1517,39 @@
           productId
         )
       );
+
+
+
+      /*
+      DELETE IMAGE FROM FIREBASE STORAGE
+      */
+
+      if (storagePath) {
+
+        try {
+
+          const imageRef =
+            ref(
+              storage,
+              storagePath
+            );
+
+
+          await deleteObject(
+            imageRef
+          );
+
+        } catch (storageError) {
+
+          console.warn(
+            "Storage image delete failed:",
+            storageError
+          );
+
+        }
+
+      }
+
 
 
       showMessage(
@@ -1133,9 +1561,14 @@
       loadProducts();
 
 
+
     } catch (error) {
 
-      console.error(error);
+
+      console.error(
+        "DELETE PRODUCT ERROR:",
+        error
+      );
 
 
       showMessage(
@@ -1149,14 +1582,18 @@
   }
 
 
+
   /*
-    MESSAGE
+  =====================================================
+  MESSAGE
+  =====================================================
   */
 
   function showMessage(
     text,
     type
   ) {
+
 
     message.textContent =
       text;
@@ -1180,8 +1617,11 @@
   }
 
 
+
   /*
-    HTML ESCAPE
+  =====================================================
+  HTML ESCAPE
+  =====================================================
   */
 
   function escapeHtml(text) {
@@ -1198,8 +1638,11 @@
 
   }
 
+
 </script>
+
 
 </body>
 
 </html>
+```
