@@ -1,19 +1,15 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Zuzoo - Products</title>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -21,19 +17,16 @@
       font-family: Arial, sans-serif;
     }
 
-
     body {
       background: #f5f6fa;
       color: #222;
     }
-
 
     .container {
       max-width: 1100px;
       margin: auto;
       padding: 30px 20px;
     }
-
 
     .topbar {
       display: flex;
@@ -43,17 +36,14 @@
       gap: 15px;
     }
 
-
     .topbar h1 {
       font-size: 28px;
     }
-
 
     .topbar p {
       color: #777;
       margin-top: 5px;
     }
-
 
     .back-btn {
       text-decoration: none;
@@ -64,7 +54,6 @@
       font-size: 14px;
     }
 
-
     .card {
       background: white;
       border-radius: 14px;
@@ -73,12 +62,10 @@
       margin-bottom: 25px;
     }
 
-
     .card h2 {
       margin-bottom: 20px;
       font-size: 21px;
     }
-
 
     .form-grid {
       display: grid;
@@ -86,24 +73,20 @@
       gap: 18px;
     }
 
-
     .form-group {
       display: flex;
       flex-direction: column;
     }
 
-
     .full {
       grid-column: 1 / -1;
     }
-
 
     label {
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 7px;
     }
-
 
     input,
     select,
@@ -116,19 +99,26 @@
       outline: none;
     }
 
-
     input:focus,
     select:focus,
     textarea:focus {
       border-color: #6c5ce7;
     }
 
-
     textarea {
       min-height: 120px;
       resize: vertical;
     }
 
+    .image-preview {
+      width: 180px;
+      max-height: 180px;
+      object-fit: contain;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      display: none;
+    }
 
     .add-btn {
       margin-top: 20px;
@@ -143,17 +133,14 @@
       cursor: pointer;
     }
 
-
     .add-btn:hover {
       background: #5849d6;
     }
-
 
     .add-btn:disabled {
       background: #aaa;
       cursor: not-allowed;
     }
-
 
     .message {
       margin-top: 15px;
@@ -162,24 +149,20 @@
       display: none;
     }
 
-
     .success {
       background: #e8f8ef;
       color: #168344;
     }
-
 
     .error {
       background: #ffe9e9;
       color: #c62828;
     }
 
-
     .products-table {
       width: 100%;
       border-collapse: collapse;
     }
-
 
     .products-table th,
     .products-table td {
@@ -189,18 +172,23 @@
       font-size: 14px;
     }
 
-
     .products-table th {
       background: #fafafa;
     }
 
+    .product-thumb {
+      width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
 
     .empty {
       text-align: center;
       padding: 30px;
       color: #888;
     }
-
 
     .delete-btn {
       border: none;
@@ -211,6 +199,9 @@
       cursor: pointer;
     }
 
+    .delete-btn:hover {
+      background: #ffd0d0;
+    }
 
     .loading {
       text-align: center;
@@ -218,14 +209,10 @@
       color: #777;
     }
 
-
-    /* UPLOAD PROGRESS */
-
     .upload-progress {
       display: none;
       margin-top: 15px;
     }
-
 
     .progress-text {
       display: flex;
@@ -235,7 +222,6 @@
       margin-bottom: 6px;
     }
 
-
     .progress-bar {
       width: 100%;
       height: 8px;
@@ -244,7 +230,6 @@
       overflow: hidden;
     }
 
-
     .progress-fill {
       width: 0%;
       height: 100%;
@@ -252,93 +237,62 @@
       transition: width 0.2s ease;
     }
 
-
     @media(max-width: 700px) {
-
       .form-grid {
         grid-template-columns: 1fr;
       }
 
-
       .full {
         grid-column: auto;
       }
-
 
       .topbar {
         align-items: flex-start;
         flex-direction: column;
       }
 
-
       .card {
         padding: 18px;
         overflow-x: auto;
       }
 
-
       .products-table {
-        min-width: 700px;
+        min-width: 750px;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
   <!-- TOP BAR -->
-
   <div class="topbar">
-
     <div>
-
       <h1>Products</h1>
-
-      <p>
-        Manage your Zuzoo products
-      </p>
-
+      <p>Manage your Zuzoo products</p>
     </div>
 
-
-    <a href="dashboard.html"
-       class="back-btn">
-
+    <a href="dashboard.html" class="back-btn">
       ← Dashboard
-
     </a>
-
   </div>
 
 
   <!-- ADD PRODUCT -->
-
   <div class="card">
 
     <h2>➕ Add New Product</h2>
 
-
     <form id="productForm">
-
 
       <div class="form-grid">
 
-
         <!-- PRODUCT NAME -->
-
         <div class="form-group">
 
-          <label>
-            Product Name *
-          </label>
+          <label>Product Name *</label>
 
           <input
             type="text"
@@ -350,12 +304,9 @@
 
 
         <!-- CATEGORY -->
-
         <div class="form-group">
 
-          <label>
-            Category *
-          </label>
+          <label>Category *</label>
 
           <select id="category" required>
 
@@ -393,12 +344,9 @@
 
 
         <!-- PRICE -->
-
         <div class="form-group">
 
-          <label>
-            Price *
-          </label>
+          <label>Price *</label>
 
           <input
             type="number"
@@ -412,12 +360,9 @@
 
 
         <!-- SALE PRICE -->
-
         <div class="form-group">
 
-          <label>
-            Sale Price
-          </label>
+          <label>Sale Price</label>
 
           <input
             type="number"
@@ -430,12 +375,9 @@
 
 
         <!-- STOCK -->
-
         <div class="form-group">
 
-          <label>
-            Stock *
-          </label>
+          <label>Stock *</label>
 
           <input
             type="number"
@@ -447,13 +389,29 @@
         </div>
 
 
-        <!-- DESCRIPTION -->
+        <!-- IMAGE -->
+        <div class="form-group">
 
+          <label>Product Image *</label>
+
+          <input
+            type="file"
+            id="productImage"
+            accept="image/*"
+            required>
+
+          <img
+            id="imagePreview"
+            class="image-preview"
+            alt="Image Preview">
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
         <div class="form-group full">
 
-          <label>
-            Description *
-          </label>
+          <label>Description *</label>
 
           <textarea
             id="description"
@@ -462,12 +420,39 @@
 
         </div>
 
+      </div>
+
+
+      <!-- UPLOAD PROGRESS -->
+      <div
+        id="uploadProgress"
+        class="upload-progress">
+
+        <div class="progress-text">
+
+          <span id="uploadStatus">
+            Uploading image...
+          </span>
+
+          <span id="uploadPercent">
+            0%
+          </span>
+
+        </div>
+
+        <div class="progress-bar">
+
+          <div
+            id="progressFill"
+            class="progress-fill">
+          </div>
+
+        </div>
 
       </div>
 
 
       <!-- ADD BUTTON -->
-
       <button
         type="submit"
         class="add-btn"
@@ -479,12 +464,10 @@
 
 
       <!-- MESSAGE -->
-
       <div
         id="message"
         class="message">
       </div>
-
 
     </form>
 
@@ -492,11 +475,9 @@
 
 
   <!-- PRODUCT LIST -->
-
   <div class="card">
 
     <h2>📦 All Products</h2>
-
 
     <div id="productsContainer">
 
@@ -508,102 +489,87 @@
 
   </div>
 
-
 </div>
 
 
-<script type="module">
+<script>
+
+  /* =====================================================
+     SUPABASE CONFIG
+  ===================================================== */
+
+  const SUPABASE_URL =
+    "https://wnqlbppkuqathlazubvu.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_FR6ESJgcnLJiAN0Fe2fig_6yZbjc9K";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 
-  /*
-  =====================================================
-  FIREBASE
-  =====================================================
-  */
-
-
-  /*
-  =====================================================
-  DOM
-  =====================================================
-  */
+  /* =====================================================
+     DOM
+  ===================================================== */
 
   const productForm =
     document.getElementById("productForm");
 
-
   const imageInput =
     document.getElementById("productImage");
-
 
   const imagePreview =
     document.getElementById("imagePreview");
 
-
   const message =
     document.getElementById("message");
-
 
   const addProductBtn =
     document.getElementById("addProductBtn");
 
-
   const productsContainer =
     document.getElementById("productsContainer");
-
 
   const uploadProgress =
     document.getElementById("uploadProgress");
 
-
   const uploadStatus =
     document.getElementById("uploadStatus");
 
-
   const uploadPercent =
     document.getElementById("uploadPercent");
-
 
   const progressFill =
     document.getElementById("progressFill");
 
 
-  /*
-  =====================================================
-  SELECTED IMAGE
-  =====================================================
-  */
+  /* =====================================================
+     SELECTED IMAGE
+  ===================================================== */
 
   let selectedImage = null;
 
 
-  /*
-  =====================================================
-  AUTH CHECK
-  =====================================================
-  */
+  /* =====================================================
+     LOAD PRODUCTS ON PAGE LOAD
+  ===================================================== */
 
-  onAuthStateChanged(auth, (user) => {
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    if (!user) {
-
-      window.location.href =
-        "login.html";
-
-      return;
+      loadProducts();
 
     }
-
-    loadProducts();
-
-  });
+  );
 
 
-  /*
-  =====================================================
-  IMAGE PREVIEW
-  =====================================================
-  */
+  /* =====================================================
+     IMAGE PREVIEW
+  ===================================================== */
 
   imageInput.addEventListener(
     "change",
@@ -611,11 +577,22 @@
 
       selectedImage =
         this.files[0];
-      /*
-      IMAGE TYPE CHECK
-      */
 
-      if (!selectedImage.type.startsWith("image/")) {
+      if (!selectedImage) {
+
+        imagePreview.style.display =
+          "none";
+
+        return;
+
+      }
+
+
+      /* IMAGE TYPE CHECK */
+
+      if (
+        !selectedImage.type.startsWith("image/")
+      ) {
 
         showMessage(
           "Please select a valid image.",
@@ -634,12 +611,12 @@
       }
 
 
-      /*
-      5 MB LIMIT
-      */
+      /* 5 MB LIMIT */
 
-      if (selectedImage.size >
-          5 * 1024 * 1024) {
+      if (
+        selectedImage.size >
+        5 * 1024 * 1024
+      ) {
 
         showMessage(
           "Image must be smaller than 5 MB.",
@@ -658,13 +635,10 @@
       }
 
 
-      /*
-      PREVIEW
-      */
+      /* PREVIEW */
 
       const reader =
         new FileReader();
-
 
       reader.onload =
         function (e) {
@@ -677,18 +651,17 @@
 
         };
 
-
-      reader.readAsDataURL(selectedImage);
+      reader.readAsDataURL(
+        selectedImage
+      );
 
     }
   );
 
 
-  /*
-  =====================================================
-  ADD PRODUCT
-  =====================================================
-  */
+  /* =====================================================
+     ADD PRODUCT
+  ===================================================== */
 
   productForm.addEventListener(
     "submit",
@@ -697,9 +670,7 @@
       e.preventDefault();
 
 
-      /*
-      IMAGE CHECK
-      */
+      /* IMAGE CHECK */
 
       if (!selectedImage) {
 
@@ -715,22 +686,16 @@
 
       try {
 
-
-        /*
-        DISABLE BUTTON
-        */
+        /* DISABLE BUTTON */
 
         addProductBtn.disabled =
           true;
-
 
         addProductBtn.textContent =
           "Uploading Image...";
 
 
-        /*
-        GET FORM VALUES
-        */
+        /* FORM VALUES */
 
         const name =
           document
@@ -738,12 +703,10 @@
             .value
             .trim();
 
-
         const category =
           document
             .getElementById("category")
             .value;
-
 
         const price =
           Number(
@@ -752,18 +715,15 @@
               .value
           );
 
-
         const salePriceValue =
           document
             .getElementById("salePrice")
             .value;
 
-
         const salePrice =
           salePriceValue === ""
             ? null
             : Number(salePriceValue);
-
 
         const stock =
           Number(
@@ -772,7 +732,6 @@
               .value
           );
 
-
         const description =
           document
             .getElementById("description")
@@ -780,18 +739,42 @@
             .trim();
 
 
-        /*
-        =================================================
-        CREATE UNIQUE FILE NAME
-        =================================================
-        */
+        /* VALIDATION */
+
+        if (!name) {
+          throw new Error(
+            "Product name is required."
+          );
+        }
+
+        if (!category) {
+          throw new Error(
+            "Please select a category."
+          );
+        }
+
+        if (price < 0) {
+          throw new Error(
+            "Price cannot be negative."
+          );
+        }
+
+        if (stock < 0) {
+          throw new Error(
+            "Stock cannot be negative."
+          );
+        }
+
+
+        /* =================================================
+           CREATE UNIQUE FILE NAME
+        ================================================= */
 
         const extension =
           selectedImage.name
             .split(".")
             .pop()
             .toLowerCase();
-
 
         const safeName =
           name
@@ -800,185 +783,164 @@
             .replace(/^-+|-+$/g, "")
             .substring(0, 50);
 
-
         const uniqueId =
           crypto.randomUUID();
 
-
         const fileName =
           `${safeName || "product"}_${uniqueId}.${extension}`;
-
 
         const storagePath =
           `products/${fileName}`;
 
 
-        /*
-        =================================================
-        FIREBASE STORAGE REFERENCE
-        =================================================
-        */
-
-        const imageRef =
-          ref(
-            storage,
-            storagePath
-          );
-
-
-        /*
-        =================================================
-        UPLOAD PROGRESS SHOW
-        =================================================
-        */
+        /* =================================================
+           SHOW PROGRESS
+        ================================================= */
 
         uploadProgress.style.display =
           "block";
 
+        uploadStatus.textContent =
+          "Uploading image...";
 
-        /*
-        =================================================
-        FIREBASE STORAGE UPLOAD
-        =================================================
-        */
+        uploadPercent.textContent =
+          "0%";
 
-        const uploadTask =
-          uploadBytesResumable(
-            imageRef,
-            selectedImage,
-            {
-              contentType:
-                selectedImage.type,
-
-              cacheControl:
-                "public,max-age=31536000"
-            }
-          );
+        progressFill.style.width =
+          "0%";
 
 
-        /*
-        WAIT FOR UPLOAD
-        */
+        /* =================================================
+           SUPABASE STORAGE UPLOAD
+        ================================================= */
+
+        const {
+          data: uploadData,
+          error: uploadError
+        } =
+          await supabaseClient
+            .storage
+            .from("product-images")
+            .upload(
+              storagePath,
+              selectedImage,
+              {
+                contentType:
+                  selectedImage.type,
+
+                cacheControl:
+                  "31536000",
+
+                upsert: false
+              }
+            );
+
+
+        if (uploadError) {
+
+          throw uploadError;
+
+        }
+
+
+        /* UPLOAD COMPLETE */
+
+        uploadPercent.textContent =
+          "100%";
+
+        progressFill.style.width =
+          "100%";
+
+        uploadStatus.textContent =
+          "Image uploaded ✓";
+
+
+        /* =================================================
+           GET PUBLIC IMAGE URL
+        ================================================= */
+
+        const {
+          data: publicUrlData
+        } =
+          supabaseClient
+            .storage
+            .from("product-images")
+            .getPublicUrl(
+              storagePath
+            );
+
 
         const imageUrl =
-          await new Promise(
-            (resolve, reject) => {
+          publicUrlData.publicUrl;
 
 
-              uploadTask.on(
-                "state_changed",
-
-
-                /*
-                PROGRESS
-                */
-
-                (snapshot) => {
-
-                  const progress =
-                    Math.round(
-                      (
-                        snapshot.bytesTransferred /
-                        snapshot.totalBytes
-                      ) * 100
-                    );
-
-                },
-
-
-                /*
-                ERROR
-                */
-
-                (error) => {
-
-                  reject(error);
-
-                },
-
-
-                /*
-                COMPLETE
-                */
-
-                async () => {
-
-                  try {
-
-                    const url =
-                      await getDownloadURL(
-                        uploadTask.snapshot.ref
-                      );
-
-                    resolve(url);
-
-                  } catch (error) {
-
-                    reject(error);
-
-                  }
-
-                }
-
-              );
-
-            }
-          );
-
-
-        /*
-        =================================================
-        SAVE PRODUCT TO FIRESTORE
-        =================================================
-        */
+        /* =================================================
+           SAVE PRODUCT TO SUPABASE
+        ================================================= */
 
         addProductBtn.textContent =
           "Saving Product...";
 
-
-        await addDoc(
-          collection(
-            db,
-            "products"
-          ),
-          {
-
-            name:
-              name,
-
-            category:
-              category,
-
-            price:
-              price,
-
-            salePrice:
-              salePrice,
-
-            stock:
-              stock,
-
-            description:
-              description,
-
-            imageUrl:
-              imageUrl,
-
-            storagePath:
-              storagePath,
-
-            createdAt:
-              serverTimestamp()
-
-          }
-        );
+        uploadStatus.textContent =
+          "Saving product data...";
 
 
-        /*
-        =================================================
-        SUCCESS
-        =================================================
-        */
+        const {
+          data: productData,
+          error: productError
+        } =
+          await supabaseClient
+            .from("products")
+            .insert([
+              {
+                name: name,
+
+                category: category,
+
+                price: price,
+
+                salePrice: salePrice,
+
+                stock: stock,
+
+                description: description,
+
+                imageUrl: imageUrl,
+
+                storagePath: storagePath,
+
+                createdAt:
+                  new Date().toISOString()
+              }
+            ])
+            .select();
+
+
+        if (productError) {
+
+          /*
+
+            Database save failed.
+            Remove uploaded image so
+            unused image doesn't remain.
+
+          */
+
+          await supabaseClient
+            .storage
+            .from("product-images")
+            .remove([
+              storagePath
+            ]);
+
+          throw productError;
+
+        }
+
+
+        /* =================================================
+           SUCCESS
+        ================================================= */
 
         showMessage(
           "Product added successfully! 🎉",
@@ -988,17 +950,19 @@
 
         productForm.reset();
 
+        imagePreview.src = "";
 
         imagePreview.style.display =
           "none";
 
-
         selectedImage =
           null;
 
-
         uploadProgress.style.display =
           "none";
+
+        progressFill.style.width =
+          "0%";
 
 
         loadProducts();
@@ -1006,61 +970,19 @@
 
       } catch (error) {
 
-
         console.error(
           "ADD PRODUCT ERROR:",
           error
         );
 
-
-        /*
-        FIREBASE ERROR MESSAGE
-        */
-
-        let errorMessage =
-          error.message ||
-          "Something went wrong.";
-
-
-        if (
-          error.code ===
-          "storage/unauthorized"
-        ) {
-
-          errorMessage =
-            "Upload permission denied. Please check Firebase Storage Rules.";
-
-        }
-
-
-        if (
-          error.code ===
-          "storage/quota-exceeded"
-        ) {
-
-          errorMessage =
-            "Firebase Storage quota exceeded.";
-
-        }
-
-
-        if (
-          error.code ===
-          "storage/canceled"
-        ) {
-
-          errorMessage =
-            "Image upload was cancelled.";
-
-        }
-
-
         showMessage(
           "Error: " +
-          errorMessage,
+          (
+            error.message ||
+            "Something went wrong."
+          ),
           "error"
         );
-
 
         uploadProgress.style.display =
           "none";
@@ -1068,69 +990,79 @@
       }
 
 
-      /*
-      ENABLE BUTTON
-      */
+      /* ENABLE BUTTON */
 
       addProductBtn.disabled =
         false;
-
 
       addProductBtn.textContent =
         "Add Product";
 
     }
-
   );
 
 
-  /*
-  =====================================================
-  LOAD PRODUCTS
-  =====================================================
-  */
+  /* =====================================================
+     LOAD PRODUCTS
+  ===================================================== */
 
   async function loadProducts() {
 
     try {
 
-
       productsContainer.innerHTML =
-        `<div class="loading">
+        `
+        <div class="loading">
           Loading products...
-        </div>`;
+        </div>
+        `;
 
 
-      const snapshot =
-        await getDocs(
-          collection(
-            db,
-            "products"
-          )
-        );
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("products")
+          .select("*")
+          .order(
+            "createdAt",
+            {
+              ascending: false
+            }
+          );
 
 
-      if (snapshot.empty) {
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      if (!data || data.length === 0) {
 
         productsContainer.innerHTML =
-          `<div class="empty">
+          `
+          <div class="empty">
             No products added yet.
-          </div>`;
+          </div>
+          `;
 
         return;
 
       }
 
 
-      let html = `
-
+      let html =
+        `
         <table class="products-table">
 
           <thead>
 
             <tr>
 
-              
+              <th>Image</th>
 
               <th>Name</th>
 
@@ -1147,141 +1079,160 @@
           </thead>
 
           <tbody>
-
-      `;
-
-
-      snapshot.forEach((item) => {
-
-
-        const product =
-          item.data();
-
-
-        const salePrice =
-          product.salePrice;
-
-
-        html += `
-
-          <tr>
-
-
-            <td>
-              ${escapeHtml(product.name)}
-            </td>
-
-
-            <td>
-              ${escapeHtml(product.category)}
-            </td>
-
-
-            <td>
-
-              ${
-                salePrice !== null &&
-                salePrice !== undefined
-
-                  ? `<del>₹${product.price}</del>
-                     ₹${salePrice}`
-
-                  : `₹${product.price}`
-              }
-
-            </td>
-
-
-            <td>
-              ${escapeHtml(String(product.stock ?? 0))}
-            </td>
-
-
-            <td>
-
-              <button
-                class="delete-btn"
-                data-id="${item.id}"
-                data-storage-path="${escapeHtml(product.storagePath || "")}">
-
-                Delete
-
-              </button>
-
-            </td>
-
-          </tr>
-
         `;
 
-      });
+
+      data.forEach(
+        (product) => {
+
+          const salePrice =
+            product.salePrice;
 
 
-      html += `
+          const image =
+            product.imageUrl
+              ? `
+                <img
+                  src="${escapeHtml(product.imageUrl)}"
+                  class="product-thumb"
+                  alt="${escapeHtml(product.name)}"
+                >
+              `
+              : "—";
 
+
+          const price =
+            salePrice !== null &&
+            salePrice !== undefined
+
+              ? `
+                <del>
+                  ₹${product.price}
+                </del>
+                <br>
+                ₹${salePrice}
+              `
+
+              : `
+                ₹${product.price}
+              `;
+
+
+          html +=
+            `
+            <tr>
+
+              <td>
+                ${image}
+              </td>
+
+              <td>
+                ${escapeHtml(product.name)}
+              </td>
+
+              <td>
+                ${escapeHtml(product.category)}
+              </td>
+
+              <td>
+                ${price}
+              </td>
+
+              <td>
+                ${escapeHtml(
+                  String(
+                    product.stock ?? 0
+                  )
+                )}
+              </td>
+
+              <td>
+
+                <button
+                  class="delete-btn"
+                  data-id="${product.id}"
+                  data-storage-path="${escapeHtml(
+                    product.storagePath || ""
+                  )}">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+            `;
+
+        }
+      );
+
+
+      html +=
+        `
           </tbody>
 
         </table>
-
-      `;
+        `;
 
 
       productsContainer.innerHTML =
         html;
 
 
-      /*
-      =================================================
-      DELETE BUTTONS
-      =================================================
-      */
+      /* DELETE BUTTONS */
 
       document
         .querySelectorAll(".delete-btn")
-        .forEach((button) => {
+        .forEach(
+          (button) => {
 
-          button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+              "click",
+              () => {
 
-              deleteProduct(button.dataset.id);
+                deleteProduct(
+                  button.dataset.id,
+                  button.dataset.storagePath
+                );
 
-            }
-          );
+              }
+            );
 
-        });
+          }
+        );
 
 
     } catch (error) {
-
 
       console.error(
         "LOAD PRODUCTS ERROR:",
         error
       );
 
-
       productsContainer.innerHTML =
-        `<div class="empty">
-          Failed to load products.
-        </div>`;
+        `
+        <div class="empty">
+          Failed to load products.<br><br>
+          ${escapeHtml(
+            error.message || ""
+          )}
+        </div>
+        `;
 
     }
 
   }
 
 
-  /*
-  =====================================================
-  DELETE PRODUCT
-  =====================================================
-  */
+  /* =====================================================
+     DELETE PRODUCT
+  ===================================================== */
 
   async function deleteProduct(
     productId,
     storagePath
   ) {
-
 
     const confirmed =
       confirm(
@@ -1289,48 +1240,55 @@
       );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+
+      return;
+
+    }
 
 
     try {
 
+      /* DELETE DATABASE RECORD */
 
-      /*
-      DELETE FIRESTORE DOCUMENT
-      */
+      const {
+        error: deleteError
+      } =
+        await supabaseClient
+          .from("products")
+          .delete()
+          .eq(
+            "id",
+            productId
+          );
 
-      await deleteDoc(
-        doc(
-          db,
-          "products",
-          productId
-        )
-      );
+
+      if (deleteError) {
+
+        throw deleteError;
+
+      }
 
 
-      /*
-      DELETE IMAGE FROM FIREBASE STORAGE
-      */
+      /* DELETE IMAGE */
 
       if (storagePath) {
 
-        try {
-
-          const imageRef =
-            ref(
-              storage,
+        const {
+          error: storageError
+        } =
+          await supabaseClient
+            .storage
+            .from("product-images")
+            .remove([
               storagePath
-            );
+            ]);
 
 
-          await deleteObject(
-            imageRef
-          );
-
-        } catch (storageError) {
+        if (storageError) {
 
           console.warn(
-            "Storage image delete failed:",
+            "Image delete failed:",
             storageError
           );
 
@@ -1350,16 +1308,17 @@
 
     } catch (error) {
 
-
       console.error(
         "DELETE PRODUCT ERROR:",
         error
       );
 
-
       showMessage(
         "Delete failed: " +
-        error.message,
+        (
+          error.message ||
+          "Something went wrong."
+        ),
         "error"
       );
 
@@ -1368,65 +1327,55 @@
   }
 
 
-  /*
-  =====================================================
-  MESSAGE
-  =====================================================
-  */
+  /* =====================================================
+     MESSAGE
+  ===================================================== */
 
   function showMessage(
     text,
     type
   ) {
 
-
     message.textContent =
       text;
 
-
     message.className =
       "message " + type;
-
 
     message.style.display =
       "block";
 
 
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      message.style.display =
-        "none";
+        message.style.display =
+          "none";
 
-    }, 5000);
+      },
+      5000
+    );
 
   }
 
 
-  /*
-  =====================================================
-  HTML ESCAPE
-  =====================================================
-  */
+  /* =====================================================
+     HTML ESCAPE
+  ===================================================== */
 
   function escapeHtml(text) {
 
     const div =
       document.createElement("div");
 
-
     div.textContent =
       text ?? "";
-
 
     return div.innerHTML;
 
   }
 
-
 </script>
 
-
 </body>
-
 </html>
-```
