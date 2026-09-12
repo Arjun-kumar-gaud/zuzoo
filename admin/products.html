@@ -504,10 +504,22 @@
   const SUPABASE_KEY =
     "sb_publishable_FR6ESJgcnLJiAN0Fe2fig_6yZbjc9K";
 
+  /* IMPORTANT:
+     This page does not use Supabase Auth.
+     Disable session persistence so an old/corrupt JWT from another
+     page/project cannot be reused and cause "Invalid Compact JWS".
+  */
   const supabaseClient =
     window.supabase.createClient(
       SUPABASE_URL,
-      SUPABASE_KEY
+      SUPABASE_KEY,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      }
     );
 
 
