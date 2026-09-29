@@ -2,374 +2,780 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Zuzoo - Firebase Test</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Zuzoo - Online Shopping in India | Mobiles, Electronics & Fashion</title>
+
+  <meta name="description"
+        content="Shop mobiles, electronics, fashion, home products and more at Zuzoo.in. Discover great deals and quality products at competitive prices.">
+
+  <meta name="robots"
+        content="index, follow, max-image-preview:large">
+
+  <meta name="author" content="Zuzoo">
+
+  <meta name="theme-color" content="#6a1b9a">
+
+  <link rel="canonical" href="https://zuzoo.in/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="Zuzoo - Online Shopping in India">
+  <meta property="og:description"
+        content="Shop mobiles, electronics, fashion, home products and more at Zuzoo.in.">
+  <meta property="og:url" content="https://zuzoo.in/">
+  <meta property="og:site_name" content="Zuzoo">
+  <meta property="og:image"
+        content="https://zuzoo.in/assets/images/zuzoo-og.jpg">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap"
+        rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f6fa;
+      margin: 0;
+      padding-bottom: 70px;
     }
-
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      text-align: center;
+    :root {
+      --z-purple: #6a1b9a;
+      --z-purple-light: #8e24aa;
+      --z-navy: #0d1b2a;
+      --z-navy-light: #1b2a3f;
+      --z-gold: #ffb300;
     }
-
-    header h1 {
-      font-size: 28px;
+    .bg-purple { background: var(--z-purple) !important; }
+    .bg-navy { background: var(--z-navy) !important; }
+    .text-purple { color: var(--z-purple) !important; }
+    .text-navy { color: var(--z-navy) !important; }
+    .btn-outline-purple {
+      border: 1px solid var(--z-purple);
+      color: var(--z-purple);
     }
-
-    .firebase-status {
-      max-width: 500px;
-      margin: 20px auto 0;
-      padding: 12px;
-      background: #fff3cd;
-      color: #856404;
+    .btn-outline-purple:hover {
+      background: var(--z-purple);
+      color: #fff;
+    }
+    /* header */
+    .z-header {
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(13, 27, 42, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+    }
+    .z-logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: -0.5px;
+      color: var(--z-purple);
+    }
+    .z-logo span { color: var(--z-navy); }
+    .z-search-bar {
       border-radius: 8px;
-      text-align: center;
+      border: 1px solid #e0e4ec;
+      background: #f8f9fc;
+      padding: 0.45rem 1rem;
+      width: 100%;
+      max-width: 480px;
+      transition: 0.2s;
     }
-
-    .container {
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
+    .z-search-bar:focus {
+      border-color: var(--z-purple);
+      box-shadow: 0 0 0 0.2rem rgba(106, 27, 154, 0.2);
+      background: #fff;
     }
-
-    .card {
+    /* category nav */
+    .z-category-nav {
       background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid #eaeef5;
+      padding: 0.5rem 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
     }
-
-    .card h2 {
-      margin-bottom: 8px;
+    .z-category-nav::-webkit-scrollbar { height: 4px; background: #eaeef5; }
+    .z-category-nav::-webkit-scrollbar-thumb { background: var(--z-purple-light); border-radius: 12px; }
+    .z-cat-link {
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      margin: 0 0.2rem;
+      font-weight: 500;
+      color: var(--z-navy);
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      background: transparent;
     }
-
-    .card p {
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 7px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #2563eb;
-    }
-
-    button {
-      width: 100%;
-      padding: 13px;
-      background: #2563eb;
+    .z-cat-link i { margin-right: 6px; font-size: 1.1rem; }
+    .z-cat-link:hover, .z-cat-link.active {
+      background: var(--z-purple);
       color: white;
+    }
+    /* product cards */
+    .product-card {
       border: none;
-      border-radius: 7px;
-      font-size: 16px;
-      cursor: pointer;
+      border-radius: 16px;
+      background: white;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 12px rgba(13, 27, 42, 0.04);
+      height: 100%;
     }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    button:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
-
-    #message {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 7px;
-      display: none;
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(106, 27, 154, 0.08); }
+    .product-img {
+      background: #f0f2f6;
+      border-radius: 16px 16px 0 0;
+      
       text-align: center;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .success {
-      display: block !important;
-      background: #d1fae5;
-      color: #065f46;
+    .product-img img {
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
     }
-
-    .error {
-      display: block !important;
-      background: #fee2e2;
-      color: #991b1b;
+    .product-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--z-navy);
+      margin-bottom: 0.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #777;
+    .product-price {
+      font-weight: 700;
+      color: var(--z-purple);
+      font-size: 1.2rem;
     }
+    .product-old-price { color: #8c9aa8; font-size: 0.85rem; text-decoration: line-through; margin-left: 6px; }
+    .product-offer { background: #ffe8e8; color: #c62828; padding: 0.1rem 0.7rem; border-radius: 30px; font-size: 0.75rem; font-weight: 600; }
+    .product-category-badge {
+      background: #eaeef5;
+      color: var(--z-navy);
+      font-size: 0.65rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.2rem;
+    }
+    /* mobile bottom nav */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid #eaeef5;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 0 10px;
+      z-index: 1050;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+    }
+    .mobile-bottom-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.7rem;
+      color: #5a6a7a;
+      text-decoration: none;
+      transition: 0.2s;
+      padding: 0 8px;
+      position: relative;
+    }
+    .mobile-bottom-nav a i { font-size: 1.5rem; margin-bottom: 2px; }
+    .mobile-bottom-nav a.active { color: var(--z-purple); font-weight: 600; }
+    .mobile-bottom-nav a .badge-cart {
+      background: var(--z-purple);
+      color: white;
+      border-radius: 40px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.65rem;
+      position: absolute;
+      top: -4px;
+      right: -8px;
+    }
+    /* banner */
+    .hero-banner {
+      background: linear-gradient(145deg, var(--z-navy), #1f3a57);
+      border-radius: 20px;
+      padding: 2rem 1.8rem;
+      color: white;
+      margin: 1.2rem 0 1.8rem;
+    }
+    .hero-banner h1 { font-weight: 700; font-size: 2rem; }
+    .hero-banner .btn-light { background: white; color: var(--z-navy); font-weight: 600; border-radius: 60px; padding: 0.5rem 2rem; }
+    .section-title {
+      font-weight: 700;
+      color: var(--z-navy);
+      border-left: 6px solid var(--z-purple);
+      padding-left: 16px;
+    }
+    /* mobile overrides: hide logo + cart in top bar, only search + user */
+    @media (max-width: 767px) {
+      .z-logo-mobile-hide { display: none !important; }
+      .z-cart-mobile-hide { display: none !important; }
+      .z-header .col-3.d-flex { flex: 0 0 auto; width: auto; }
+      .z-header .col-6 { flex: 1; }
+      .z-header .col-3.d-md-none { flex: 0 0 auto; width: auto; }
+      .mobile-bottom-nav { display: flex; }
+      .product-img { height: 140px; }
+      .hero-banner h1 { font-size: 1.5rem; }
+    }
+    @media (min-width: 768px) {
+      .mobile-bottom-nav { display: none; }
+      .z-logo-mobile-hide { display: flex !important; }
+      .z-cart-mobile-hide { display: inline-block !important; }
+    }
+    /* category badge on product */
+    .category-tag {
+      background: #eef2f7;
+      border-radius: 30px;
+      padding: 0.1rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--z-navy);
+      display: inline-block;
+    }
+    .badge-purple { background: var(--z-purple-light); color: white; }
   </style>
 </head>
-
 <body>
 
-  <header>
-    <h1>Zuzoo</h1>
-  </header>
+<!-- ===== HEADER ===== -->
+<header class="z-header">
+  <div class="container">
+    <div class="row align-items-center g-2 py-2">
+      <!-- Logo - hidden on mobile -->
+      <div class="col-3 col-md-2 d-flex align-items-center z-logo-mobile-hide">
+        <a href="https://zuzoo.in/" class="text-decoration-none z-logo d-flex align-items-center">
+          ZUZ<span>OO</span>
+        </a>
+      </div>
+      <!-- Search bar - takes full width on mobile -->
+      <div class="col-8 col-md-7">
+        <div class="d-flex align-items-center bg-light rounded-4 px-2 py-1" style="border:1px solid #e2e8f0;">
+          <i class="bi bi-search text-secondary me-2"></i>
+          <input type="text" class="z-search-bar border-0 bg-transparent" placeholder="Search for products, brands..." aria-label="Search" />
+        </div>
+      </div>
+      <!-- Desktop right icons (hidden on mobile except user) -->
+      <div class="col-md-3 d-none d-md-flex justify-content-end align-items-center gap-3">
+        <a href="#" class="text-navy text-decoration-none"><i class="bi bi-person-circle fs-4"></i> <span class="fw-semibold">Sign in</span></a>
+        <a href="#" class="text-navy text-decoration-none"><i class="bi bi-heart fs-4"></i></a>
+        <a href="#" class="text-navy text-decoration-none position-relative">
+          <i class="bi bi-cart fs-4"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge bg-purple rounded-pill" style="font-size:0.65rem;">2</span>
+        </a>
+      </div>
+      <!-- mobile: only user icon + search (cart hidden, logo hidden) -->
+      
+    </div>
+  </div>
+</header>
 
-  <!-- Firebase connection status -->
-  <div id="firebaseStatus" class="firebase-status">
-    Connecting to Firebase...
+<!-- ===== CATEGORY NAV ===== -->
+<div class="category-wrapper">
+  <div class="container">
+    <div class="z-category-nav d-flex flex-nowrap align-items-center py-2">
+      <a href="#" class="z-cat-link active"><i class="bi bi-grid-3x3-gap-fill"></i> All</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-phone"></i> Mobiles</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-laptop"></i> Electronics</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-tv"></i> TV & Appliances</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-houses"></i> Home</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-person-arms-up"></i> Fashion</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-bicycle"></i> Sports</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-book"></i> Books</a>
+      <a href="#" class="z-cat-link"><i class="bi bi-camera"></i> Cameras</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO BANNER ===== -->
+<div class="container">
+  <div class="hero-banner">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h1 class="display-5 fw-bold">Online Shopping in India<br><span style="color: var(--z-gold);">Great Deals on Top Products</span></h1>
+        <p class="opacity-75">Electronics, fashion, home & more â€” free delivery</p>
+        <a href="#" class="btn btn-light btn-lg mt-2">Shop now <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="col-md-5 d-none d-md-block text-end">
+        <img src="https://placehold.co/300x150/6a1b9a/ffffff?text=ZUZOO+OFFERS" alt="Zuzoo deals" class="img-fluid rounded-4" style="max-height:150px; width:auto;" />
+      </div>
+    </div>
   </div>
 
-
-  <main class="container">
-
-    <div class="card">
-
-      <h2>Test Form</h2>
-
-      <p>
-        Enter your details. This data will be saved in Firestore.
-      </p>
-
-      <form id="userForm">
-
-        <div class="form-group">
-          <label for="name">Name</label>
-
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-            required
-          >
-        </div>
+  <!-- ===== PRODUCT GRID with category badges ===== -->
+  <h3 class="section-title mb-4"><i class="bi bi-lightning-fill text-purple"></i> Trending now</h3>
+<div id="productsGrid" class="row g-3 g-md-4">
+  <div class="col-12 text-center py-5">
+    <div class="spinner-border text-purple"></div>
+    <p class="text-muted mt-3">Products loading...</p>
+  </div>
+</div>
 
 
-        <div class="form-group">
-          <label for="email">Email</label>
+  <!-- footer note -->
+  <div class="my-5 text-center text-muted small">
+    <p>Â© 2026 Zuzoo â€” India's largest online store. <span class="text-purple">#ShopWithZuzoo</span></p>
+  </div>
+</div>
 
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            required
-          >
-        </div>
+<!-- ===== MOBILE BOTTOM NAV (cart count structured) ===== -->
+<div class="mobile-bottom-nav d-md-none">
+  <a href="#" class="active"><i class="bi bi-house-door-fill"></i><span>Home</span></a>
+  <a href="#"><i class="bi bi-grid-fill"></i><span>Categories</span></a>
+  <a href="#" class="position-relative">
+    <i class="bi bi-cart-fill"></i>
+    <span class="badge-cart">2</span>
+    <span>Cart</span>
+  </a>
+  <a href="#"><i class="bi bi-person-fill"></i><span>User</span></a>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  /* =====================================================
+     SUPABASE CONFIG
+  ===================================================== */
 
-        <button type="submit" id="saveButton">
-          Save Data
-        </button>
+  const SUPABASE_URL =
+    "https://wnqlbppkuqathlazubvu.supabase.co";
 
-      </form>
+  const SUPABASE_KEY =
+    "sb_publishable_FR6ESJgcnlMJiAN0Fe2fig_6yZbjc9K";
 
-
-      <div id="message"></div>
-
-    </div>
-
-  </main>
-
-
-  <footer>
-    © 2026 Zuzoo
-  </footer>
-
-
-  <!-- Firebase -->
-  <script type="module">
-
-    // Firebase App
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-    // Firestore
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      }
+    );
 
 
-    // Firebase configuration
-    const firebaseConfig = {
+  /* =====================================================
+     DOM
+  ===================================================== */
 
-      apiKey: "AIzaSyBVMATK68o-lLNI2ESxY2FTvrtwiPBeTRY",
-
-      authDomain: "zuzoo-6afa5.firebaseapp.com",
-
-      projectId: "zuzoo-6afa5",
-
-      storageBucket: "zuzoo-6afa5.firebasestorage.app",
-
-      messagingSenderId: "560745524336",
-
-      appId: "1:560745524336:web:3db8ae577ccb65456598b5",
-
-      measurementId: "G-RR5MN45J4S"
-
-    };
+  const productsGrid =
+    document.getElementById("productsGrid");
 
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+  /* =====================================================
+     LOAD PRODUCTS
+  ===================================================== */
+
+  async function loadProducts() {
+
+    try {
+
+      const {
+        data: products,
+        error
+      } =
+        await supabaseClient
+          .from("products")
+          .select("*")
+          .order(
+            "createdAt",
+            {
+              ascending: false
+            }
+          );
 
 
-    // Initialize Firestore
-    const db = getFirestore(app);
+      if (error) {
+
+        throw error;
+
+      }
 
 
-    // Firebase status
-    const firebaseStatus =
-      document.getElementById("firebaseStatus");
+      /* NO PRODUCTS */
 
+      if (!products || products.length === 0) {
 
-    firebaseStatus.textContent =
-      "Firebase connected successfully ✅";
+        productsGrid.innerHTML = `
+          <div class="col-12">
+            <div class="text-center py-5">
 
-    firebaseStatus.style.background = "#d1fae5";
-    firebaseStatus.style.color = "#065f46";
+              <i class="bi bi-box-seam"
+                 style="font-size:3rem;color:#aaa;">
+              </i>
 
+              <h5 class="mt-3">
+                No products available
+              </h5>
 
-    console.log("Firebase connected:", app.name);
+              <p class="text-muted">
+                New products will appear here.
+              </p>
 
-
-    // Form elements
-    const form =
-      document.getElementById("userForm");
-
-    const nameInput =
-      document.getElementById("name");
-
-    const emailInput =
-      document.getElementById("email");
-
-    const saveButton =
-      document.getElementById("saveButton");
-
-    const message =
-      document.getElementById("message");
-
-
-    // Form submit
-    form.addEventListener("submit", async (event) => {
-
-      event.preventDefault();
-
-
-      const name =
-        nameInput.value.trim();
-
-      const email =
-        emailInput.value.trim();
-
-
-      if (!name || !email) {
-
-        showMessage(
-          "Please enter name and email.",
-          "error"
-        );
+            </div>
+          </div>
+        `;
 
         return;
-      }
-
-
-      // Disable button
-      saveButton.disabled = true;
-      saveButton.textContent = "Saving...";
-
-
-      try {
-
-        // Save data to Firestore
-        const docRef = await addDoc(
-          collection(db, "users"),
-          {
-            name: name,
-            email: email,
-            createdAt: serverTimestamp()
-          }
-        );
-
-
-        console.log(
-          "Document saved successfully:",
-          docRef.id
-        );
-
-
-        showMessage(
-          "Data saved successfully! ✅",
-          "success"
-        );
-
-
-        // Clear form
-        form.reset();
-
-
-      } catch (error) {
-
-        console.error(
-          "Firestore error:",
-          error
-        );
-
-
-        showMessage(
-          "Error: " + error.message,
-          "error"
-        );
 
       }
 
 
-      // Enable button
-      saveButton.disabled = false;
-      saveButton.textContent = "Save Data";
+      /* =================================================
+         CREATE PRODUCT CARDS
+      ================================================= */
 
-    });
+      productsGrid.innerHTML =
+        products.map(
+          product => createProductCard(product)
+        ).join("");
 
 
-    // Message function
-    function showMessage(text, type) {
+    } catch (error) {
 
-      message.textContent = text;
+      console.error(
+        "LOAD PRODUCTS ERROR:",
+        error
+      );
 
-      message.className = type;
+
+      productsGrid.innerHTML = `
+        <div class="col-12">
+
+          <div class="alert alert-danger text-center">
+
+            Failed to load products.
+
+            <br>
+
+            <small>
+              ${escapeHtml(
+                error.message || ""
+              )}
+            </small>
+
+          </div>
+
+        </div>
+      `;
 
     }
 
-  </script>
+  }
+
+
+  /* =====================================================
+     PRODUCT CARD
+  ===================================================== */
+
+  function createProductCard(product) {
+
+    const price =
+      Number(product.price || 0);
+
+    const salePrice =
+      product.salePrice !== null &&
+      product.salePrice !== undefined &&
+      product.salePrice !== ""
+        ? Number(product.salePrice)
+        : null;
+
+
+    /* OFFER PERCENTAGE */
+
+    let offer = "";
+
+    if (
+      salePrice !== null &&
+      price > 0 &&
+      salePrice < price
+    ) {
+
+      const discount =
+        Math.round(
+          ((price - salePrice) / price) * 100
+        );
+
+      offer = `
+        <span class="product-offer">
+          ${discount}% off
+        </span>
+      `;
+
+    }
+
+
+    /* PRICE HTML */
+
+    let priceHtml = "";
+
+    if (
+      salePrice !== null &&
+      salePrice < price
+    ) {
+
+      priceHtml = `
+        <span class="product-price">
+          ₹${formatPrice(salePrice)}
+        </span>
+
+        <span class="product-old-price">
+          ₹${formatPrice(price)}
+        </span>
+      `;
+
+    } else {
+
+      priceHtml = `
+        <span class="product-price">
+          ₹${formatPrice(price)}
+        </span>
+      `;
+
+    }
+
+
+    /* STOCK */
+
+    const stock =
+      Number(product.stock || 0);
+
+
+    let stockHtml = "";
+
+    if (stock <= 0) {
+
+      stockHtml = `
+        <small class="text-danger fw-semibold">
+          Out of stock
+        </small>
+      `;
+
+    } else if (stock <= 5) {
+
+      stockHtml = `
+        <small class="text-warning fw-semibold">
+          Only ${stock} left
+        </small>
+      `;
+
+    }
+
+
+    return `
+      <div class="col-6 col-md-3">
+
+        <div class="product-card p-2">
+
+          <!-- PRODUCT IMAGE -->
+
+          <div class="product-img">
+
+            <img
+              src="${escapeHtml(
+                product.imageUrl || ""
+              )}"
+
+              alt="${escapeHtml(
+                product.name || "Product"
+              )}"
+
+              loading="lazy"
+
+              onerror="
+                this.src='https://placehold.co/400x400/f0f2f6/777?text=No+Image'
+              "
+            >
+
+          </div>
+
+
+          <!-- PRODUCT INFO -->
+
+          <div class="p-2">
+
+            <!-- NAME -->
+
+            <div class="product-title">
+
+              ${escapeHtml(
+                product.name || "Unnamed Product"
+              )}
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div>
+
+              ${priceHtml}
+
+            </div>
+
+
+            <!-- OFFER -->
+
+            <div class="mt-1">
+
+              ${offer}
+
+            </div>
+
+
+            <!-- STOCK + HEART -->
+
+            <div
+              class="d-flex justify-content-between
+                     align-items-center mt-2"
+            >
+
+              <div>
+
+                ${stockHtml}
+
+              </div>
+
+              <i
+                class="bi bi-heart text-secondary"
+                style="cursor:pointer;"
+                onclick="toggleWishlist(this)"
+              ></i>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <span class="product-category-badge">
+
+              <i class="bi bi-tag me-1"></i>
+
+              ${escapeHtml(
+                product.category || "Other"
+              )}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  }
+
+
+  /* =====================================================
+     FORMAT PRICE
+  ===================================================== */
+
+  function formatPrice(price) {
+
+    return Number(price).toLocaleString(
+      "en-IN",
+      {
+        maximumFractionDigits: 2
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     HTML ESCAPE
+  ===================================================== */
+
+  function escapeHtml(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent =
+      text ?? "";
+
+    return div.innerHTML;
+
+  }
+
+
+  /* =====================================================
+     WISHLIST ICON
+  ===================================================== */
+
+  function toggleWishlist(icon) {
+
+    icon.classList.toggle(
+      "bi-heart"
+    );
+
+    icon.classList.toggle(
+      "bi-heart-fill"
+    );
+
+    if (
+      icon.classList.contains(
+        "bi-heart-fill"
+      )
+    ) {
+
+      icon.style.color =
+        "#6a1b9a";
+
+    } else {
+
+      icon.style.color =
+        "";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     START
+  ===================================================== */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadProducts
+  );
+
+</script>
 
 </body>
 </html>
