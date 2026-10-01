@@ -9,16 +9,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body { font-family:'Inter',sans-serif; background:#f4f6fa; }
-:root { --z-purple:#6a1b9a; --z-navy:#0d1b2a; }
+body { font-family:'Inter',sans-serif; background:#f4f6fa; padding-bottom:90px; }
+:root { --z-purple:#6a1b9a; --z-navy:#0d1b2a; --z-gold:#ffb300; }
 .text-purple { color:var(--z-purple)!important; }
-.z-header { background:#fff; box-shadow:0 2px 12px rgba(13,27,42,.08); }
+.z-header { background:#fff; box-shadow:0 2px 12px rgba(13,27,42,.08); position:sticky; top:0; z-index:100; }
 .z-logo { font-weight:700; font-size:1.6rem; color:var(--z-purple); text-decoration:none; }
 .z-logo span { color:var(--z-navy); }
 .btn-purple { background:var(--z-purple); color:#fff; border:none; }
 .btn-purple:hover { background:#8e24aa; color:#fff; }
 .card-box { background:#fff; border-radius:14px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.05); margin-bottom:16px; }
-.summary-box { background:#fff; border-radius:14px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.05); position:sticky; top:20px; }
+.summary-box { background:#fff; border-radius:14px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.05); position:sticky; top:80px; }
+.step-badge { display:inline-block; width:26px; height:26px; line-height:26px; text-align:center; background:var(--z-purple); color:#fff; border-radius:50%; font-weight:700; font-size:.85rem; margin-right:8px; }
+.addr-card { border:2px solid #e0e4ec; border-radius:12px; padding:16px; margin-bottom:12px; cursor:pointer; transition:.2s; position:relative; }
+.addr-card:hover { border-color:#b39ddb; }
+.addr-card.selected { border-color:var(--z-purple); background:#f8f4fc; }
+.addr-card.selected::after { content:"\F26E"; font-family:"bootstrap-icons"; position:absolute; top:12px; right:14px; color:var(--z-purple); font-size:1.3rem; }
+.addr-type-badge { background:#eaeef5; color:var(--z-navy); font-size:.7rem; padding:.15rem .6rem; border-radius:20px; font-weight:600; text-transform:uppercase; }
+.new-addr-form { display:none; }
+.new-addr-form.active { display:block; }
+.mobile-bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #eaeef5; padding:10px 16px; z-index:1050; display:flex; gap:10px; align-items:center; justify-content:space-between; box-shadow:0 -4px 12px rgba(0,0,0,.06); }
+@media (min-width: 992px) { .mobile-bottom-nav { display:none !important; } }
 </style>
 </head>
 <body>
@@ -31,69 +41,153 @@ body { font-family:'Inter',sans-serif; background:#f4f6fa; }
 </header>
 
 <div class="container py-4">
-  <h3 class="mb-4"><i class="bi bi-bag-check text-purple"></i> Checkout</h3>
-  <div class="row g-4">
-    <div class="col-lg-7">
-      <form id="checkoutForm">
-        <div class="card-box">
-          <h5 class="mb-3">Shipping Details</h5>
-          <div class="row g-3">
-            <div class="col-12">
-              <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" id="fullName" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Phone *</label>
-              <input type="tel" class="form-control" id="phone" required pattern="[0-9]{10}">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Pincode *</label>
-              <input type="text" class="form-control" id="pincode" required pattern="[0-9]{6}">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Address *</label>
-              <textarea class="form-control" id="address" rows="2" required></textarea>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">City *</label>
-              <input type="text" class="form-control" id="city" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">State *</label>
-              <input type="text" class="form-control" id="state" required>
-            </div>
-          </div>
-        </div>
+  <h4 class="mb-4"><i class="bi bi-bag-check text-purple"></i> Checkout</h4>
 
-        <div class="card-box">
-          <h5 class="mb-3">Payment Method</h5>
-          <div class="form-check mb-2">
-            <input class="form-check-input" type="radio" name="payment" id="payCOD" value="cod" checked>
-            <label class="form-check-label" for="payCOD"><i class="bi bi-cash-coin text-success"></i> Cash on Delivery</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="payment" id="payOnline" value="online">
-            <label class="form-check-label" for="payOnline"><i class="bi bi-credit-card text-primary"></i> Online Payment (Demo)</label>
-          </div>
+  <div class="row g-4">
+    <!-- LEFT: Address + Payment -->
+    <div class="col-lg-7">
+
+      <!-- STEP 1: DELIVERY ADDRESS -->
+      <div class="card-box">
+        <h6 class="fw-bold mb-3">
+          <span class="step-badge">1</span>Delivery Address
+        </h6>
+
+        <!-- Saved addresses -->
+        <div id="savedAddresses"></div>
+
+        <!-- Add new address button -->
+        <button class="btn btn-outline-purple w-100" id="showNewAddrBtn" style="border:1px dashed var(--z-purple); color:var(--z-purple);">
+          <i class="bi bi-plus-circle me-1"></i> Add New Address
+        </button>
+
+        <!-- New address form -->
+        <div class="new-addr-form mt-3" id="newAddrForm">
+          <form id="addressForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="fName" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone (10-digit) *</label>
+                <input type="tel" class="form-control" id="fPhone" required pattern="[0-9]{10}" maxlength="10">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pincode *</label>
+                <input type="text" class="form-control" id="fPincode" required pattern="[0-9]{6}" maxlength="6">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">City *</label>
+                <input type="text" class="form-control" id="fCity" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">State *</label>
+                <input type="text" class="form-control" id="fState" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Landmark (optional)</label>
+                <input type="text" class="form-control" id="fLandmark">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Address (House No, Building, Street, Area) *</label>
+                <textarea class="form-control" id="fAddress" rows="2" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label d-block">Address Type</label>
+                <div class="d-flex gap-2">
+                  <input type="radio" class="btn-check" name="addrType" id="typeHome" value="home" checked>
+                  <label class="btn btn-outline-secondary btn-sm" for="typeHome">
+                    <i class="bi bi-house-door"></i> Home
+                  </label>
+                  <input type="radio" class="btn-check" name="addrType" id="typeWork" value="work">
+                  <label class="btn btn-outline-secondary btn-sm" for="typeWork">
+                    <i class="bi bi-briefcase"></i> Work
+                  </label>
+                  <input type="radio" class="btn-check" name="addrType" id="typeOther" value="other">
+                  <label class="btn btn-outline-secondary btn-sm" for="typeOther">
+                    <i class="bi bi-geo"></i> Other
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="fSave" checked>
+                  <label class="form-check-label" for="fSave">
+                    Save this address for future orders
+                  </label>
+                </div>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-purple flex-grow-1">
+                  <i class="bi bi-check-circle me-1"></i> Save & Use This Address
+                </button>
+                <button type="button" class="btn btn-outline-secondary" id="cancelNewAddrBtn">Cancel</button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+
+      <!-- STEP 2: PAYMENT -->
+      <div class="card-box">
+        <h6 class="fw-bold mb-3">
+          <span class="step-badge">2</span>Payment Method
+        </h6>
+        <div class="form-check mb-2 p-3 border rounded" style="border-color:#e0e4ec!important;">
+          <input class="form-check-input" type="radio" name="payment" id="payCOD" value="cod" checked>
+          <label class="form-check-label w-100" for="payCOD">
+            <i class="bi bi-cash-coin text-success me-2"></i>
+            <strong>Cash on Delivery</strong>
+            <div class="small text-muted ms-4">Pay when you receive</div>
+          </label>
+        </div>
+        <div class="form-check p-3 border rounded" style="border-color:#e0e4ec!important;">
+          <input class="form-check-input" type="radio" name="payment" id="payOnline" value="online">
+          <label class="form-check-label w-100" for="payOnline">
+            <i class="bi bi-credit-card text-primary me-2"></i>
+            <strong>UPI / Card / Netbanking</strong>
+            <div class="small text-muted ms-4">Demo mode — no real charge</div>
+          </label>
+        </div>
+      </div>
+
     </div>
 
+    <!-- RIGHT: Order Summary -->
     <div class="col-lg-5">
       <div class="summary-box">
-        <h5 class="mb-3">Order Summary</h5>
+        <h6 class="fw-bold mb-3">Order Summary</h6>
         <div id="itemsPreview" style="max-height:280px;overflow:auto;"></div>
         <hr>
-        <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><strong id="sumSubtotal">₹0</strong></div>
-        <div class="d-flex justify-content-between mb-2"><span>Shipping</span><strong id="sumShipping">₹0</strong></div>
+        <div class="d-flex justify-content-between mb-2 small">
+          <span>Subtotal</span><strong id="sumSubtotal">₹0</strong>
+        </div>
+        <div class="d-flex justify-content-between mb-2 small">
+          <span>Shipping</span><strong id="sumShipping">₹0</strong>
+        </div>
         <hr>
-        <div class="d-flex justify-content-between mb-3 fs-5"><span>Total</span><strong class="text-purple" id="sumTotal">₹0</strong></div>
-        <button class="btn btn-purple w-100 py-2" id="placeOrderBtn">
+        <div class="d-flex justify-content-between mb-3 fs-5">
+          <span class="fw-bold">Total</span>
+          <strong class="text-purple" id="sumTotal">₹0</strong>
+        </div>
+        <button class="btn btn-purple w-100 py-2 d-none d-lg-block" id="placeOrderBtnDesktop">
           <i class="bi bi-check-circle me-1"></i>Place Order
         </button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- MOBILE STICKY BOTTOM -->
+<div class="mobile-bottom-nav">
+  <div>
+    <div class="small text-muted">Total</div>
+    <div class="fs-5 fw-bold text-purple" id="mobileTotal">₹0</div>
+  </div>
+  <button class="btn btn-purple px-4 py-2" id="placeOrderBtnMobile">
+    <i class="bi bi-check-circle me-1"></i>Place Order
+  </button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
@@ -102,24 +196,139 @@ body { font-family:'Inter',sans-serif; background:#f4f6fa; }
 <script>
 const SHIPPING_FREE_ABOVE = 499;
 const SHIPPING_FEE = 49;
-let currentUser = null;
 
+let currentUser = null;
+let selectedAddress = null;
+let savedAddressesList = [];
+
+// ============ INIT ============
 (async function init() {
   currentUser = await getCurrentUser();
   if (!currentUser) {
-    toast("Please login to checkout", "warning");
+    toast("Please login first", "warning");
     setTimeout(() => window.location.href = "login.html?redirect=checkout.html", 1200);
     return;
   }
 
-  // Prefill
-  const meta = currentUser.user_metadata || {};
-  document.getElementById("fullName").value = meta.full_name || "";
-  document.getElementById("phone").value = meta.phone || "";
-
+  await loadAddresses();
+  await prefillFromProfile();
   renderSummary();
+  bindEvents();
 })();
 
+async function prefillFromProfile() {
+  const p = await getProfile();
+  if (p) {
+    if (p.full_name) document.getElementById("fName").value = p.full_name;
+    if (p.phone) document.getElementById("fPhone").value = p.phone;
+  }
+}
+
+// ============ ADDRESSES ============
+async function loadAddresses() {
+  savedAddressesList = await getAddresses();
+  const container = document.getElementById("savedAddresses");
+
+  if (!savedAddressesList.length) {
+    container.innerHTML = `
+      <div class="text-center py-3 text-muted small">
+        <i class="bi bi-geo-alt" style="font-size:1.5rem;"></i>
+        <div class="mt-1">No saved addresses yet</div>
+      </div>`;
+    document.getElementById("newAddrForm").classList.add("active");
+    document.getElementById("showNewAddrBtn").style.display = "none";
+    return;
+  }
+
+  document.getElementById("showNewAddrBtn").style.display = "";
+  container.innerHTML = savedAddressesList.map(a => `
+    <div class="addr-card ${a.is_default ? 'selected' : ''}" data-id="${a.id}">
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <strong>${escapeHtml(a.full_name)}</strong>
+        <span class="addr-type-badge">${escapeHtml(a.address_type)}</span>
+        ${a.is_default ? '<span class="badge bg-purple" style="background:var(--z-purple)!important;font-size:.65rem;">DEFAULT</span>' : ''}
+      </div>
+      <div class="small">
+        ${escapeHtml(a.address_line)},
+        ${a.landmark ? escapeHtml(a.landmark) + ', ' : ''}
+        ${escapeHtml(a.city)}, ${escapeHtml(a.state)} - <strong>${escapeHtml(a.pincode)}</strong>
+      </div>
+      <div class="small mt-1"><i class="bi bi-telephone"></i> ${escapeHtml(a.phone)}</div>
+      <div class="mt-2">
+        <button class="btn btn-sm btn-outline-danger" onclick="event.stopPropagation();removeAddr(${a.id})">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+  `).join("");
+
+  container.querySelectorAll(".addr-card").forEach(el => {
+    el.addEventListener("click", () => {
+      container.querySelectorAll(".addr-card").forEach(x => x.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedAddress = savedAddressesList.find(a => a.id == el.dataset.id);
+    });
+  });
+
+  selectedAddress = savedAddressesList.find(a => a.is_default) || savedAddressesList[0];
+}
+
+async function removeAddr(id) {
+  if (!confirm("Delete this address?")) return;
+  await deleteAddress(id);
+  toast("Address deleted");
+  await loadAddresses();
+}
+
+// ============ NEW ADDRESS FORM ============
+document.getElementById("showNewAddrBtn").addEventListener("click", () => {
+  document.getElementById("newAddrForm").classList.add("active");
+  document.getElementById("showNewAddrBtn").style.display = "none";
+});
+
+document.getElementById("cancelNewAddrBtn").addEventListener("click", () => {
+  document.getElementById("newAddrForm").classList.remove("active");
+  if (savedAddressesList.length) {
+    document.getElementById("showNewAddrBtn").style.display = "";
+  }
+  document.getElementById("addressForm").reset();
+});
+
+document.getElementById("addressForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const addr = {
+    full_name: document.getElementById("fName").value.trim(),
+    phone: document.getElementById("fPhone").value.trim(),
+    pincode: document.getElementById("fPincode").value.trim(),
+    address_line: document.getElementById("fAddress").value.trim(),
+    city: document.getElementById("fCity").value.trim(),
+    state: document.getElementById("fState").value.trim(),
+    landmark: document.getElementById("fLandmark").value.trim(),
+    address_type: document.querySelector('input[name="addrType"]:checked').value,
+    is_default: !savedAddressesList.length // first address becomes default
+  };
+
+  const saveForFuture = document.getElementById("fSave").checked;
+
+  if (saveForFuture) {
+    const { error } = await saveAddress(addr);
+    if (error) { toast(error.message, "danger"); return; }
+    await loadAddresses();
+    selectedAddress = savedAddressesList.find(a => a.is_default) || savedAddressesList[0];
+    toast("Address saved ✓");
+  } else {
+    // Temporary address — just use in memory
+    selectedAddress = addr;
+    toast("Address added for this order only");
+  }
+
+  document.getElementById("newAddrForm").classList.remove("active");
+  document.getElementById("showNewAddrBtn").style.display = "";
+  document.getElementById("addressForm").reset();
+});
+
+// ============ SUMMARY ============
 function renderSummary() {
   const cart = getCart();
   const preview = document.getElementById("itemsPreview");
@@ -137,44 +346,58 @@ function renderSummary() {
 
   const subtotal = cartTotal();
   const shipping = subtotal >= SHIPPING_FREE_ABOVE ? 0 : SHIPPING_FEE;
+  const total = subtotal + shipping;
+
   document.getElementById("sumSubtotal").textContent = "₹" + formatPrice(subtotal);
   document.getElementById("sumShipping").textContent = shipping === 0 ? "FREE" : "₹" + formatPrice(shipping);
-  document.getElementById("sumTotal").textContent = "₹" + formatPrice(subtotal + shipping);
+  document.getElementById("sumTotal").textContent = "₹" + formatPrice(total);
+  document.getElementById("mobileTotal").textContent = "₹" + formatPrice(total);
 }
 
-document.getElementById("placeOrderBtn").addEventListener("click", async () => {
-  const form = document.getElementById("checkoutForm");
-  if (!form.checkValidity()) { form.reportValidity(); return; }
+// ============ PLACE ORDER ============
+function bindEvents() {
+  document.getElementById("placeOrderBtnDesktop").addEventListener("click", placeOrder);
+  document.getElementById("placeOrderBtnMobile").addEventListener("click", placeOrder);
+}
+
+async function placeOrder() {
+  if (!selectedAddress) {
+    toast("Please select or add a delivery address", "warning");
+    return;
+  }
 
   const cart = getCart();
   if (!cart.length) { toast("Cart is empty", "warning"); return; }
 
-  const btn = document.getElementById("placeOrderBtn");
-  btn.disabled = true;
-  btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Placing...`;
+  const btns = [
+    document.getElementById("placeOrderBtnDesktop"),
+    document.getElementById("placeOrderBtnMobile")
+  ];
+  btns.forEach(b => {
+    b.disabled = true;
+    b.dataset.orig = b.innerHTML;
+    b.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Placing...`;
+  });
 
   try {
     const subtotal = cartTotal();
     const shipping = subtotal >= SHIPPING_FREE_ABOVE ? 0 : SHIPPING_FEE;
     const total = subtotal + shipping;
-
     const orderNumber = "ZZ" + Date.now().toString().slice(-9);
     const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
 
     const orderPayload = {
       user_id: currentUser.id,
       order_number: orderNumber,
-      subtotal,
-      shipping,
-      total,
+      subtotal, shipping, total,
       status: "pending",
       payment_method: paymentMethod,
-      full_name: document.getElementById("fullName").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      address: document.getElementById("address").value.trim(),
-      city: document.getElementById("city").value.trim(),
-      state: document.getElementById("state").value.trim(),
-      pincode: document.getElementById("pincode").value.trim()
+      full_name: selectedAddress.full_name,
+      phone: selectedAddress.phone,
+      address: selectedAddress.address_line,
+      city: selectedAddress.city,
+      state: selectedAddress.state,
+      pincode: selectedAddress.pincode
     };
 
     const { data: orderData, error: orderErr } = await supabaseClient
@@ -193,16 +416,25 @@ document.getElementById("placeOrderBtn").addEventListener("click", async () => {
     const { error: itemsErr } = await supabaseClient.from("order_items").insert(items);
     if (itemsErr) throw itemsErr;
 
+    // Update user profile with name/phone for next time
+    await updateProfile({
+      full_name: selectedAddress.full_name,
+      phone: selectedAddress.phone
+    });
+
     clearCart();
     toast("Order placed successfully! ✓");
     setTimeout(() => window.location.href = "orders.html", 800);
+
   } catch (err) {
     console.error(err);
     toast("Order failed: " + err.message, "danger");
-    btn.disabled = false;
-    btn.innerHTML = `<i class="bi bi-check-circle me-1"></i>Place Order`;
+    btns.forEach(b => {
+      b.disabled = false;
+      b.innerHTML = b.dataset.orig;
+    });
   }
-});
+}
 </script>
 </body>
 </html>

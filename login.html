@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login / Sign Up - Zuzoo</title>
+<title>Login - Zuzoo</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,10 @@ body { font-family:'Inter',sans-serif; background:linear-gradient(145deg,#0d1b2a
 .auth-card { background:#fff; border-radius:20px; padding:32px; max-width:440px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.3); }
 .z-logo { font-weight:700; font-size:2rem; color:var(--z-purple); text-decoration:none; text-align:center; display:block; margin-bottom:6px; }
 .z-logo span { color:#0d1b2a; }
-.tab-btn { border:none; background:transparent; padding:8px 16px; font-weight:600; color:#888; border-bottom:3px solid transparent; }
-.tab-btn.active { color:var(--z-purple); border-bottom-color:var(--z-purple); }
+.otp-input { width:48px; height:56px; text-align:center; font-size:1.5rem; font-weight:700; border:2px solid #e0e4ec; border-radius:10px; }
+.otp-input:focus { border-color:var(--z-purple); box-shadow:0 0 0 .2rem rgba(106,27,154,.15); outline:none; }
+.step { display:none; }
+.step.active { display:block; }
 </style>
 </head>
 <body>
@@ -26,44 +28,60 @@ body { font-family:'Inter',sans-serif; background:linear-gradient(145deg,#0d1b2a
   <a href="index.html" class="z-logo">ZUZ<span>OO</span></a>
   <p class="text-center text-muted mb-4" style="font-size:.9rem;">Your one-stop shop for everything</p>
 
-  <div class="d-flex justify-content-center mb-4">
-    <button class="tab-btn active" id="tabLogin">Login</button>
-    <button class="tab-btn" id="tabSignup">Sign Up</button>
+  <!-- STEP 1: Email -->
+  <div class="step active" id="stepEmail">
+    <h5 class="text-center mb-3">Login or Sign Up</h5>
+    <p class="text-center text-muted" style="font-size:.85rem;">Enter your email to receive a 6-digit code</p>
+    <form id="emailForm">
+      <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-control form-control-lg" id="emailInput"
+               placeholder="you@example.com" required autofocus>
+      </div>
+      <button type="submit" class="btn btn-purple w-100 py-2" id="sendOtpBtn">
+        <i class="bi bi-send me-1"></i> Send Verification Code
+      </button>
+    </form>
+    <p class="text-center text-muted mt-3 mb-0" style="font-size:.8rem;">
+      New here? Same form will create your account.
+    </p>
   </div>
 
-  <!-- LOGIN -->
-  <form id="loginForm">
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" id="loginEmail" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-control" id="loginPassword" required minlength="6">
-    </div>
-    <button type="submit" class="btn btn-purple w-100 py-2" id="loginBtn">Login</button>
-  </form>
+  <!-- STEP 2: OTP -->
+  <div class="step" id="stepOtp">
+    <h5 class="text-center mb-2">Verify Your Email</h5>
+    <p class="text-center text-muted mb-4" style="font-size:.9rem;">
+      We sent a 6-digit code to<br>
+      <strong id="emailDisplay" style="color:var(--z-purple);"></strong>
+      <a href="#" id="changeEmail" class="ms-1 text-decoration-none" style="font-size:.85rem;">Change</a>
+    </p>
 
-  <!-- SIGNUP -->
-  <form id="signupForm" style="display:none;">
-    <div class="mb-3">
-      <label class="form-label">Full Name</label>
-      <input type="text" class="form-control" id="signupName" required>
+    <form id="otpForm">
+      <div class="d-flex justify-content-center gap-2 mb-4">
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="0" autofocus>
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="1">
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="2">
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="3">
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="4">
+        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" data-i="5">
+      </div>
+      <button type="submit" class="btn btn-purple w-100 py-2" id="verifyBtn">
+        <i class="bi bi-shield-check me-1"></i> Verify & Login
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <small class="text-muted">Didn't receive? </small>
+      <button class="btn btn-link btn-sm p-0 text-decoration-none" id="resendBtn" disabled>
+        Resend in <span id="timer">30</span>s
+      </button>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" id="signupEmail" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-control" id="signupPassword" required minlength="6">
-      <small class="text-muted">Min 6 characters</small>
-    </div>
-    <button type="submit" class="btn btn-purple w-100 py-2" id="signupBtn">Create Account</button>
-  </form>
+  </div>
 
   <p class="text-center mt-3 mb-0">
-    <a href="index.html" class="text-decoration-none" style="color:#666;"><i class="bi bi-arrow-left"></i> Back to store</a>
+    <a href="index.html" class="text-decoration-none" style="color:#666;">
+      <i class="bi bi-arrow-left"></i> Back to store
+    </a>
   </p>
 </div>
 
@@ -73,6 +91,8 @@ body { font-family:'Inter',sans-serif; background:linear-gradient(145deg,#0d1b2a
 <script>
 const params = new URLSearchParams(window.location.search);
 const redirectUrl = params.get("redirect") || "index.html";
+let userEmail = "";
+let resendTimer = null;
 
 // Check if already logged in
 (async () => {
@@ -80,71 +100,144 @@ const redirectUrl = params.get("redirect") || "index.html";
   if (u) window.location.href = redirectUrl;
 })();
 
-// Tabs
-document.getElementById("tabLogin").onclick = () => {
-  document.getElementById("tabLogin").classList.add("active");
-  document.getElementById("tabSignup").classList.remove("active");
-  document.getElementById("loginForm").style.display = "";
-  document.getElementById("signupForm").style.display = "none";
-};
-document.getElementById("tabSignup").onclick = () => {
-  document.getElementById("tabSignup").classList.add("active");
-  document.getElementById("tabLogin").classList.remove("active");
-  document.getElementById("signupForm").style.display = "";
-  document.getElementById("loginForm").style.display = "none";
-};
-
-// LOGIN
-document.getElementById("loginForm").addEventListener("submit", async e => {
+// ============ STEP 1: SEND OTP ============
+document.getElementById("emailForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const btn = document.getElementById("loginBtn");
+  const btn = document.getElementById("sendOtpBtn");
+  const email = document.getElementById("emailInput").value.trim();
+
+  if (!email) return;
+
   btn.disabled = true;
-  btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Logging in...`;
+  btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Sending...`;
 
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
+  // Send OTP (magic link will send {{ .Token }})
+  const { error } = await supabaseClient.auth.signInWithOtp({
+    email: email,
+    options: { shouldCreateUser: true }
+  });
 
-  const { error } = await signIn(email, password);
   if (error) {
     toast(error.message, "danger");
     btn.disabled = false;
-    btn.textContent = "Login";
+    btn.innerHTML = `<i class="bi bi-send me-1"></i> Send Verification Code`;
     return;
   }
-  toast("Welcome back! ✓");
+
+  userEmail = email;
+  document.getElementById("emailDisplay").textContent = email;
+  document.getElementById("stepEmail").classList.remove("active");
+  document.getElementById("stepOtp").classList.add("active");
+  toast("Code sent to your email ✓");
+
+  // Focus first OTP input
+  setTimeout(() => document.querySelector(".otp-input").focus(), 100);
+  startResendTimer();
+});
+
+// ============ OTP INPUT HANDLING ============
+const otpInputs = document.querySelectorAll(".otp-input");
+otpInputs.forEach((inp, i) => {
+  inp.addEventListener("input", e => {
+    const v = e.target.value.replace(/\D/g, "");
+    e.target.value = v;
+    if (v && i < otpInputs.length - 1) otpInputs[i + 1].focus();
+    // Auto-submit when all 6 filled
+    if (getOtpValue().length === 6) {
+      document.getElementById("otpForm").dispatchEvent(new Event("submit"));
+    }
+  });
+  inp.addEventListener("keydown", e => {
+    if (e.key === "Backspace" && !e.target.value && i > 0) {
+      otpInputs[i - 1].focus();
+    }
+  });
+  inp.addEventListener("paste", e => {
+    e.preventDefault();
+    const pasted = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
+    pasted.split("").forEach((ch, idx) => {
+      if (otpInputs[idx]) otpInputs[idx].value = ch;
+    });
+    if (pasted.length === 6) {
+      document.getElementById("otpForm").dispatchEvent(new Event("submit"));
+    } else if (pasted.length) {
+      otpInputs[Math.min(pasted.length, 5)].focus();
+    }
+  });
+});
+
+function getOtpValue() {
+  return Array.from(otpInputs).map(i => i.value).join("");
+}
+
+// ============ STEP 2: VERIFY OTP ============
+document.getElementById("otpForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const token = getOtpValue();
+  if (token.length !== 6) { toast("Enter 6-digit code", "warning"); return; }
+
+  const btn = document.getElementById("verifyBtn");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Verifying...`;
+
+  const { data, error } = await supabaseClient.auth.verifyOtp({
+    email: userEmail,
+    token: token,
+    type: "email"
+  });
+
+  if (error) {
+    toast(error.message, "danger");
+    btn.disabled = false;
+    btn.innerHTML = `<i class="bi bi-shield-check me-1"></i> Verify & Login`;
+    // Clear OTP
+    otpInputs.forEach(i => i.value = "");
+    otpInputs[0].focus();
+    return;
+  }
+
+  toast("Logged in successfully! ✓");
   setTimeout(() => window.location.href = redirectUrl, 700);
 });
 
-// SIGNUP
-document.getElementById("signupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const btn = document.getElementById("signupBtn");
+// ============ RESEND TIMER ============
+function startResendTimer() {
+  let sec = 30;
+  const btn = document.getElementById("resendBtn");
+  const timerEl = document.getElementById("timer");
   btn.disabled = true;
-  btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Creating...`;
+  timerEl.textContent = sec;
 
-  const name = document.getElementById("signupName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
+  clearInterval(resendTimer);
+  resendTimer = setInterval(() => {
+    sec--;
+    timerEl.textContent = sec;
+    if (sec <= 0) {
+      clearInterval(resendTimer);
+      btn.disabled = false;
+      btn.innerHTML = "Resend Code";
+    }
+  }, 1000);
+}
 
-  const { data, error } = await signUp(email, password, name);
-  if (error) {
-    toast(error.message, "danger");
-    btn.disabled = false;
-    btn.textContent = "Create Account";
-    return;
-  }
+document.getElementById("resendBtn").addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signInWithOtp({
+    email: userEmail,
+    options: { shouldCreateUser: true }
+  });
+  if (error) { toast(error.message, "danger"); return; }
+  toast("Code resent ✓");
+  startResendTimer();
+});
 
-  // Try to login immediately (if email confirmation disabled)
-  const { error: signInErr } = await signIn(email, password);
-  if (signInErr) {
-    toast("Account created. Check email to confirm.", "info");
-    btn.disabled = false;
-    btn.textContent = "Create Account";
-    return;
-  }
-
-  toast("Account created! Welcome ✓");
-  setTimeout(() => window.location.href = redirectUrl, 700);
+// ============ CHANGE EMAIL ============
+document.getElementById("changeEmail").addEventListener("click", e => {
+  e.preventDefault();
+  document.getElementById("stepOtp").classList.remove("active");
+  document.getElementById("stepEmail").classList.add("active");
+  document.getElementById("sendOtpBtn").disabled = false;
+  document.getElementById("sendOtpBtn").innerHTML = `<i class="bi bi-send me-1"></i> Send Verification Code`;
+  clearInterval(resendTimer);
 });
 </script>
 </body>
